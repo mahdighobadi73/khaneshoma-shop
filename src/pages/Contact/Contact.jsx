@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sanitizeInput } from "../utils/format";
+import { sanitizeInput } from "../../utils/format";
 
 const INITIAL_FORM = {
     name: "",

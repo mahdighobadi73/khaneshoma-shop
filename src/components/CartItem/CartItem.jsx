@@ -1,4 +1,4 @@
-import { formatPrice, toPersianNumber } from "../utils/format";
+import { formatPrice, toPersianNumber } from "../../utils/format";
 
 export default function CartItem({
   item,

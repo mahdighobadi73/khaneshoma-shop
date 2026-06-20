@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { formatPrice, toPersianNumber } from "../utils/format";
+import { formatPrice, toPersianNumber } from "../../utils/format";
 
 export default function ProductDetail({ products, onAddToCart }) {
   const { id } = useParams();

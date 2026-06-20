@@ -1,5 +1,5 @@
 import ProductGrid from "../components/ProductGrid";
-import { toPersianNumber } from "../utils/format";
+import { toPersianNumber } from "../../utils/format";
 
 // Data Constants - Separation of Content from Logic
 const STATS = [

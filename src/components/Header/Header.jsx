@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { toPersianNumber } from "../utils/format";
+import { toPersianNumber } from "../../utils/format";
 
-export default function Header({ cartCount }) {
+export default function Header ( { cartCount } ) {
   return (
     <header className="site-header">
       <div className="container header-inner">
@@ -17,7 +17,7 @@ export default function Header({ cartCount }) {
         </nav>
 
         <Link to="/cart" className="cart-btn">
-          🛒 {toPersianNumber(cartCount)}
+          🛒 { toPersianNumber( cartCount ) }
         </Link>
       </div>
     </header>

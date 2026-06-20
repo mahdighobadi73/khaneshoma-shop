@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import ProductGrid from "../components/ProductGrid";
-import { getCategories, sanitizeInput } from "../utils/format";
+import { getCategories, sanitizeInput } from "../../utils/format";
 
 export default function Products({ products, onAddToCart }) {
   const categories = useMemo(() => getCategories(products), [products]);
