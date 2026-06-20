@@ -1,0 +1,29 @@
+.card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.content {
+    padding: 16px;
+}
+
+.price {
+    color: var(--muted);
+    margin: 6px 0 12px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+}
