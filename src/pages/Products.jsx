@@ -1,0 +1,104 @@
+import { useMemo, useState } from "react";
+import ProductGrid from "../components/ProductGrid";
+import { getCategories, sanitizeInput } from "../utils/format";
+
+export default function Products({ products, onAddToCart }) {
+  const categories = useMemo(() => getCategories(products), [products]);
+
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("همه");
+  const [sortBy, setSortBy] = useState("default");
+
+  const filteredProducts = useMemo(() => {
+    let result = [...products];
+
+    const normalizedSearch = search.trim().toLowerCase();
+
+    if (normalizedSearch) {
+      result = result.filter(
+        (product) =>
+          product.name.toLowerCase().includes(normalizedSearch) ||
+          product.description.toLowerCase().includes(normalizedSearch) ||
+          product.category.toLowerCase().includes(normalizedSearch)
+      );
+    }
+
+    if (selectedCategory !== "همه") {
+      result = result.filter((product) => product.category === selectedCategory);
+    }
+
+    switch (sortBy) {
+      case "price-asc":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "rating-desc":
+        result.sort((a, b) => b.rating - a.rating);
+        break;
+      case "name-asc":
+        result.sort((a, b) => a.name.localeCompare(b.name, "fa"));
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }, [products, search, selectedCategory, sortBy]);
+
+  return (
+    <section className="section">
+      <div className="container">
+        <div className="section-head">
+          <span className="eyebrow">فروشگاه</span>
+          <h2>تمام محصولات</h2>
+          <p>جستجو، فیلتر و مرتب‌سازی حرفه‌ای برای پیدا کردن محصول مناسب.</p>
+        </div>
+
+        <div className="filters-panel">
+          <div className="form-group">
+            <label>جستجو</label>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(sanitizeInput(e.target.value, 100))}
+              placeholder="نام محصول، دسته‌بندی یا توضیح..."
+            />
+          </div>
+
+          <div className="form-group">
+            <label>دسته‌بندی</label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>مرتب‌سازی</label>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              <option value="default">پیش‌فرض</option>
+              <option value="price-asc">ارزان‌ترین</option>
+              <option value="price-desc">گران‌ترین</option>
+              <option value="rating-desc">بیشترین امتیاز</option>
+              <option value="name-asc">نام (الفبا)</option>
+            </select>
+          </div>
+        </div>
+
+        <ProductGrid
+          products={filteredProducts}
+          onAddToCart={onAddToCart}
+          emptyMessage="هیچ محصولی با این فیلترها پیدا نشد."
+        />
+      </div>
+    </section>
+  );
+}
