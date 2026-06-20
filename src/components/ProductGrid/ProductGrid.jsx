@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "/src/components/ProductCard/ProductCard";
 
 export default function ProductGrid({ products, onAddToCart, emptyMessage }) {
   if (!products.length) {

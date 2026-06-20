@@ -2,7 +2,7 @@
 @import "./variables.css";
 
 /* Global Styles */
-@import "./global.css";
+@import "./globals.css";
 
 /* Utility Styles */
 @import "./utilities.css";

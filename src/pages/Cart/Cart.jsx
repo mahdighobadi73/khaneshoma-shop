@@ -1,4 +1,4 @@
-import CartItem from "../components/CartItem";
+import CartItem from "/src/components/CartItem/CartItem";
 import { formatPrice, toPersianNumber } from "../../utils/format";
 
 export default function Cart({

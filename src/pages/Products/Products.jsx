@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import ProductGrid from "../components/ProductGrid";
+import ProductGrid from "/src/components/ProductGrid/ProductGrid";
 import { getCategories, sanitizeInput } from "../../utils/format";
 
 export default function Products({ products, onAddToCart }) {

@@ -1,4 +1,4 @@
-import ProductGrid from "../components/ProductGrid";
+import ProductGrid from "/src/components/ProductGrid/ProductGrid";
 import { toPersianNumber } from "../../utils/format";
 
 // Data Constants - Separation of Content from Logic

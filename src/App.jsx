@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Toast from "./components/Toast";
+import Header from "./components/Header/Header";
+import Toast from "./components/Toast/Toast";
 import { PRODUCTS } from "./data/products";
 import useCart from "./hooks/useCart";
 
-import Home from "./pages/Home";
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Cart from "./pages/Cart";
+import Home from "./pages/Home/Home";
+import Products from "./pages/Products/Products";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Cart from "./pages/Cart/Cart";
 
 import { useEffect, useState } from "react";
 
