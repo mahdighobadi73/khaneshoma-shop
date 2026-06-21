@@ -1,125 +1,156 @@
+/* =========================
+SECTION
+========================= */
 
 .aboutSection {
   padding: 80px 0;
-  background: linear-gradient(180deg, #fafafa, #f4f4f4);
-  position: relative;
+  background: #fafafa;
 }
 
-/* header */
+/* =========================
+SECTION HEADER
+========================= */
 
 .sectionHead {
   text-align: center;
-  max-width: 700px;
-  margin: 0 auto 60px;
+  max-width: 720px;
+  margin: 0 auto 60px auto;
 }
 
 .eyebrow {
   display: inline-block;
   font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 1px;
   color: var(--primary);
   background: rgba(0,0,0,0.05);
-  padding: 6px 14px;
-  border-radius: 999px;
-  margin-bottom: 14px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 
 .sectionHead h2 {
   font-size: 2rem;
-  margin-bottom: 16px;
-  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--text);
 }
 
 .sectionHead p {
   color: #666;
-  line-height: 1.7;
+  line-height: 1.8;
   font-size: 0.95rem;
 }
 
-/* grid */
+/* =========================
+GRID
+========================= */
 
 .contentGrid {
   display: grid;
-  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
 }
 
-/* cards */
+/* =========================
+CARDS
+========================= */
 
 .contentCard {
   background: white;
-  padding: 28px;
   border-radius: 16px;
-
-  border: 1px solid rgba(0,0,0,0.05);
-
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.03),
-    0 10px 30px rgba(0,0,0,0.05);
-
+  padding: 28px;
+  border: 1px solid var(--border);
   transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle gradient hover */
+
+.contentCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(0,0,0,0.03),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.contentCard:hover::before {
+  opacity: 1;
 }
 
 .contentCard:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 12px 24px rgba(0,0,0,0.08),
-    0 18px 40px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
 }
 
-/* title */
+/* =========================
+CARD TYPOGRAPHY
+========================= */
 
 .contentCard h3 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin-bottom: 12px;
-  font-weight: 600;
+  color: var(--text);
 }
-
-/* text */
 
 .contentCard p {
-  color: #666;
   font-size: 0.9rem;
-  line-height: 1.7;
+  color: #666;
+  line-height: 1.8;
 }
 
-/* list */
+/* =========================
+CHECK LIST
+========================= */
 
 .checkList {
-  margin-top: 14px;
-  padding: 0;
-  list-style: none;
+  margin-top: 12px;
+  padding-right: 18px;
 }
 
 .checkList li {
   position: relative;
-  padding-right: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 0.9rem;
-  color: #444;
+  color: #555;
 }
+
+/* custom bullet */
 
 .checkList li::before {
   content: "✔";
   position: absolute;
-  right: 0;
+  right: -18px;
   color: var(--primary);
   font-size: 0.8rem;
 }
 
-/* responsive */
+/* =========================
+RESPONSIVE
+========================= */
 
-@media (min-width: 640px) {
-  .contentGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+@media (max-width: 768px) {
 
-@media (min-width: 992px) {
-  .contentGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .aboutSection {
+    padding: 60px 0;
   }
 
   .sectionHead h2 {
-    font-size: 2.4rem;
+    font-size: 1.6rem;
   }
+
+  .contentGrid {
+    gap: 18px;
+  }
+
+  .contentCard {
+    padding: 22px;
+  }
+
 }

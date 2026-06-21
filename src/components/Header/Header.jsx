@@ -1,22 +1,59 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toPersianNumber } from "../../utils/format";
 import styles from "./Header.module.css";
+import { toPersianNumber } from "../../utils/format";
 
-export default function Header({ cartCount }) {
+export default function Header({ cartCount, products = [] }) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
 
-    // close menu with ESC
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const closeSearch = () => {
+        setSearchOpen(false);
+        setQuery("");
+        setResults([]);
+    };
+
+    /* close on route change */
+
+    useEffect(() => {
+        setMenuOpen(false);
+        closeSearch();
+    }, [location]);
+
+    /* ESC close */
+
     useEffect(() => {
         const handler = e => {
-            if (e.key === "Escape") setMenuOpen(false);
+            if (e.key === "Escape") closeSearch();
         };
 
         window.addEventListener("keydown", handler);
         return () => window.removeEventListener("keydown", handler);
     }, []);
 
-    const closeMenu = () => setMenuOpen(false);
+    /* live search with debounce */
+
+    useEffect(() => {
+        if (!query.trim()) {
+            setResults([]);
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            const filtered = products.filter(p =>
+                p.title.toLowerCase().includes(query.toLowerCase())
+            );
+
+            setResults(filtered.slice(0, 6));
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [query, products]);
 
     return (
         <>
@@ -26,47 +63,78 @@ export default function Header({ cartCount }) {
                         🏠 خانه شما
                     </Link>
 
-                    {/* hamburger */}
-                    <button
-                        className={`${styles.hamburger} ${menuOpen ? styles.active : ""}`}
-                        onClick={() => setMenuOpen(!menuOpen)}
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+                    {/* desktop search */}
 
-                    {/* navigation */}
-                    <nav
-                        className={`${styles.nav} ${menuOpen ? styles.open : ""}`}
-                    >
-                        <NavLink to="/" onClick={closeMenu}>
-                            خانه
-                        </NavLink>
+                    <div className={styles.searchWrapper}>
+                        <SearchIcon className={styles.searchIcon} />
 
-                        <NavLink to="/products" onClick={closeMenu}>
-                            محصولات
-                        </NavLink>
+                        <input
+                            type="text"
+                            placeholder="جستجوی ملک..."
+                            value={query}
+                            onChange={e => setQuery(e.target.value)}
+                            onFocus={() => setSearchOpen(true)}
+                            onBlur={() =>
+                                setTimeout(() => setSearchOpen(false), 200)
+                            }
+                        />
 
-                        <NavLink to="/about" onClick={closeMenu}>
-                            درباره ما
-                        </NavLink>
+                        {query && (
+                            <button
+                                className={styles.clearBtn}
+                                onClick={() => setQuery("")}
+                            >
+                                ×
+                            </button>
+                        )}
 
-                        <NavLink to="/contact" onClick={closeMenu}>
-                            تماس
-                        </NavLink>
-                    </nav>
+                        {searchOpen && results.length > 0 && (
+                            <div className={styles.results}>
+                                {results.map(item => (
+                                    <Link
+                                        key={item.id}
+                                        to={`/products/${item.id}`}
+                                        className={styles.resultItem}
+                                        onClick={closeSearch}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* cart */}
 
                     <Link to="/cart" className={styles.cart}>
-                        🛒 {toPersianNumber(cartCount)}
+                        🛒
+                        <span className={styles.badge}>
+                            {toPersianNumber(cartCount)}
+                        </span>
                     </Link>
                 </div>
             </header>
 
-            {/* overlay */}
-            {menuOpen && (
-                <div className={styles.overlay} onClick={closeMenu}></div>
+            {searchOpen && (
+                <div className={styles.searchBackdrop} onClick={closeSearch} />
             )}
         </>
+    );
+}
+
+/* modern search icon */
+
+function SearchIcon({ className }) {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+        >
+            <circle cx="11" cy="11" r="7" />
+            <line x1="20" y1="20" x2="16.5" y2="16.5" />
+        </svg>
     );
 }
