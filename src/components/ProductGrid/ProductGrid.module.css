@@ -1,5 +1,44 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+.productsGrid{
+  display:grid;
+  gap:20px;
+  grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* tablet */
+
+@media (min-width:640px){
+
+.productsGrid{
+gap:24px;
+grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+}
+
+}
+
+/* desktop */
+
+@media (min-width:1024px){
+
+.productsGrid{
+gap:28px;
+grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+}
+
+}
+
+/* empty state */
+
+.emptyBox{
+  width:100%;
+  padding:50px 20px;
+  text-align:center;
+  border-radius:18px;
+  border:1px dashed #ddd;
+  background:#fafafa;
+}
+
+.emptyText{
+  margin:0;
+  font-size:14px;
+  color:#666;
 }

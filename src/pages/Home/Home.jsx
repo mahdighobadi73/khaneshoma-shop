@@ -1,7 +1,7 @@
 import ProductGrid from "/src/components/ProductGrid/ProductGrid";
 import { toPersianNumber } from "../../utils/format";
+import styles from "./Home.module.css";
 
-// Data Constants - Separation of Content from Logic
 const STATS = [
   { label: "محصول منتخب", value: 8 },
   { label: "سال تجربه", value: 15 },
@@ -32,129 +32,169 @@ const FEATURES = [
 ];
 
 export default function Home({ products = [], onAddToCart, onNavigate }) {
+
   const featuredProducts = products.slice(0, 4);
 
   return (
-    <main className="home-page-wrapper">
-      {/* --- HERO SECTION --- */}
-      <section className="hero-section">
-        <div className="container hero-grid">
-          <div className="hero-content">
-            <span className="eyebrow fade-in">Premium Home Collection</span>
-            <h1 className="hero-title">
+    <main className={styles.homeWrapper}>
+
+      {/* HERO */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroContainer}>
+
+          <div className={styles.heroContent}>
+
+            <span className={styles.heroEyebrow}>
+              Premium Home Collection
+            </span>
+
+            <h1 className={styles.heroTitle}>
               تجربه‌ای نو در <br />
-              <span className="text-gradient">چیدمان خانه شما</span>
+              <span className={styles.gradientText}>
+                چیدمان خانه شما
+              </span>
             </h1>
-            <p className="hero-text">
-              مجموعه‌ای از لوازم خانگی و دکوراسیون که با **Obsessive Attention to Detail** برای مشتریان خوش‌سلیقه گلچین شده‌اند.
+
+            <p className={styles.heroDescription}>
+              مجموعه‌ای از لوازم خانگی و دکوراسیون که با Obsessive Attention to Detail
+              برای مشتریان خوش‌سلیقه گلچین شده‌اند.
             </p>
 
-            <div className="hero-actions">
-              <button 
-                className="primary-btn large-btn shadow-hover"
+            <div className={styles.heroButtons}>
+              <button
+                className={styles.primaryButton}
                 onClick={() => onNavigate("products")}
               >
                 کشف محصولات
               </button>
-              <button 
-                className="secondary-btn large-btn"
+
+              <button
+                className={styles.secondaryButton}
                 onClick={() => onNavigate("about")}
               >
                 داستان برند ما
               </button>
             </div>
 
-            <div className="stats-grid">
-              {STATS.map((stat, idx) => (
-                <div key={idx} className="stat-card">
-                  <strong className="number">{toPersianNumber(stat.value)}+</strong>
-                  <span className="label">{stat.label}</span>
+            <div className={styles.statsGrid}>
+              {STATS.map((stat, i) => (
+                <div key={i} className={styles.statCard}>
+                  <strong className={styles.statNumber}>
+                    {toPersianNumber(stat.value)}+
+                  </strong>
+                  <span className={styles.statLabel}>
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
+
           </div>
 
-          <div className="hero-visual">
-            <div className="glass-card floating-animation">
-              <div className="glass-card-header">
-                <div className="dot red"></div><div className="dot yellow"></div><div className="dot green"></div>
+          <div className={styles.heroVisual}>
+
+            <div className={styles.heroGlassCard}>
+
+              <div className={styles.glassHeader}>
+                <span></span><span></span><span></span>
               </div>
-              <div className="glass-card-body">
+
+              <div className={styles.glassBody}>
                 <h3>کیفیت، زیبایی، اعتماد</h3>
                 <p>Modern Design & Seamless Experience</p>
-                <ul className="modern-list">
-                  <li><span>✓</span> محصولات اصل و شناسنامه‌دار</li>
-                  <li><span>✓</span> ارسال سفارشی و ایمن</li>
-                  <li><span>✓</span> ضمانت بازگشت وجه</li>
+
+                <ul>
+                  <li>محصولات اصل و شناسنامه‌دار</li>
+                  <li>ارسال سفارشی و ایمن</li>
+                  <li>ضمانت بازگشت وجه</li>
                 </ul>
+
               </div>
             </div>
-            {/* Background Decoration */}
-            <div className="hero-blob"></div>
+
+            <div className={styles.heroDecoration}></div>
+
           </div>
+
         </div>
       </section>
 
-      {/* --- FEATURES SECTION --- */}
-      <section className="section bg-light">
+
+      {/* FEATURES */}
+
+      <section className={styles.featuresSection}>
+
         <div className="container">
-          <div className="section-head centered">
-            <span className="eyebrow">چرا ما؟</span>
+
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionEyebrow}>چرا ما؟</span>
             <h2>ارزش‌هایی که به آن پایبندیم</h2>
           </div>
 
-          <div className="features-grid">
-            {FEATURES.map((feature, idx) => (
-              <div key={idx} className="feature-card-modern">
-                <div className="feature-icon-wrapper">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    {feature.icon}
-                  </svg>
-                </div>
-                <h3>{feature.title}</h3>
-                <p>{feature.desc}</p>
-              </div>
+          <div className={styles.featuresGrid}>
+            {FEATURES.map((feature, i) => (
+              <div key={i} className={styles.featureCard}>
+
+  <div className={styles.featureHeader}>
+
+    <div className={styles.featureIcon}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        {feature.icon}
+      </svg>
+    </div>
+
+    <h3 className={styles.featureTitle}>
+      {feature.title}
+    </h3>
+
+  </div>
+
+  <p className={styles.featureDesc}>
+    {feature.desc}
+  </p>
+
+</div>
+
             ))}
           </div>
+
         </div>
+
       </section>
 
-      {/* --- FEATURED PRODUCTS --- */}
-      <section className="section featured-products">
+
+      {/* FEATURED PRODUCTS */}
+
+      <section className={styles.productsSection}>
+
         <div className="container">
-          <div className="section-head between">
+
+          <div className={styles.productsHeader}>
+
             <div>
-              <span className="eyebrow">Selection</span>
+              <span className={styles.sectionEyebrow}>Selection</span>
               <h2>محصولات منتخب امروز</h2>
             </div>
-            <button 
-              className="text-link-btn"
+
+            <button
+              className={styles.catalogLink}
               onClick={() => onNavigate("products")}
             >
-              مشاهده کاتالوگ کامل ←
+              مشاهده کاتالوگ کامل →
             </button>
+
           </div>
 
-          <div className="products-container">
-            <ProductGrid
-              products={featuredProducts}
-              onAddToCart={onAddToCart}
-              emptyMessage="در حال به‌روزرسانی لیست محصولات منتخب..."
-            />
-          </div>
+          <ProductGrid
+            products={featuredProducts}
+            onAddToCart={onAddToCart}
+            emptyMessage="در حال به‌روزرسانی محصولات..."
+          />
 
-          {featuredProducts.length > 0 && (
-             <div className="centered-actions mt-12">
-               <button
-                 className="outline-btn"
-                 onClick={() => onNavigate("products")}
-               >
-                 مشاهده همه {toPersianNumber(products.length)} محصول
-               </button>
-             </div>
-          )}
         </div>
+
       </section>
+
     </main>
   );
 }

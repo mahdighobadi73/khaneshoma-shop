@@ -1,4 +1,5 @@
 import { formatPrice, toPersianNumber } from "../../utils/format";
+import style from "./CartItem.module.css";
 
 export default function CartItem({
   item,
@@ -7,28 +8,59 @@ export default function CartItem({
   onRemove,
 }) {
   return (
-    <div className="cart-item">
-      <img className="cart-item-image" src={item.image} alt={item.name} />
+    <div className={style.cartItem}>
 
-      <div className="cart-item-info">
-        <h3>{item.name}</h3>
-        <p>{item.category}</p>
-        <strong>{formatPrice(item.price)}</strong>
+      <div className={style.imageWrapper}>
+        <img
+          className={style.cartItemImage}
+          src={item.image}
+          alt={item.name}
+        />
       </div>
 
-      <div className="cart-item-actions">
-        <div className="quantity-box">
-          <button onClick={() => onIncrement(item.id)}>+</button>
-          <span>{toPersianNumber(item.quantity)}</span>
-          <button onClick={() => onDecrement(item.id)}>-</button>
+      <div className={style.cartItemInfo}>
+        <h3 className={style.productName}>{item.name}</h3>
+        <p className={style.productCategory}>{item.category}</p>
+        <strong className={style.productPrice}>
+          {formatPrice(item.price)}
+        </strong>
+      </div>
+
+      <div className={style.cartItemActions}>
+
+        <div className={style.quantityBox}>
+          <button
+            className={style.quantityBtn}
+            onClick={() => onIncrement(item.id)}
+          >
+            +
+          </button>
+
+          <span className={style.quantityValue}>
+            {toPersianNumber(item.quantity)}
+          </span>
+
+          <button
+            className={style.quantityBtn}
+            onClick={() => onDecrement(item.id)}
+          >
+            -
+          </button>
         </div>
 
-        <div className="line-total">{formatPrice(item.lineTotal)}</div>
+        <div className={style.lineTotal}>
+          {formatPrice(item.lineTotal)}
+        </div>
 
-        <button className="danger-btn" onClick={() => onRemove(item.id)}>
+        <button
+          className={style.removeButton}
+          onClick={() => onRemove(item.id)}
+        >
           حذف
         </button>
+
       </div>
+
     </div>
   );
 }

@@ -1,5 +1,6 @@
 // About.jsx
 import React from 'react';
+import styles from "./About.module.css";
 
 // Data-Driven Approach: محتوا را از لایه نمایش جدا کردیم
 const ABOUT_FEATURES = [
@@ -23,11 +24,11 @@ const ABOUT_FEATURES = [
 
 // Sub-component برای رعایت اصل DRY (Don't Repeat Yourself)
 const AboutCard = ({ title, text, list }) => (
-  <article className="content-card">
+  <article className={styles.contentCard}>
     <h3>{title}</h3>
     <p>{text}</p>
     {list && (
-      <ul className="check-list">
+      <ul className={styles.checkList}>
         {list.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
@@ -38,10 +39,10 @@ const AboutCard = ({ title, text, list }) => (
 
 export default function About() {
   return (
-    <section className="section about-section">
-      <div className="container">
-        <header className="section-head">
-          <span className="eyebrow">درباره ما</span>
+    <section className={styles.aboutSection}>
+      <div className={`container`}>
+        <header className={styles.sectionHead}>
+          <span className={styles.eyebrow}>درباره ما</span>
           <h2>خانه شما، آرام و شیک</h2>
           <p>
             ما فروشگاه لوازم خانگی و دکوراسیون هستیم که با تمرکز بر کیفیت،
@@ -49,7 +50,7 @@ export default function About() {
           </p>
         </header>
 
-        <div className="content-grid">
+        <div className={styles.contentGrid}>
           {ABOUT_FEATURES.map((feature) => (
             <AboutCard key={feature.id} {...feature} />
           ))}

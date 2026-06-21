@@ -1,0 +1,125 @@
+
+.aboutSection {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #fafafa, #f4f4f4);
+  position: relative;
+}
+
+/* header */
+
+.sectionHead {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--primary);
+  background: rgba(0,0,0,0.05);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.sectionHead h2 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.sectionHead p {
+  color: #666;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* grid */
+
+.contentGrid {
+  display: grid;
+  gap: 28px;
+}
+
+/* cards */
+
+.contentCard {
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(0,0,0,0.05);
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.03),
+    0 10px 30px rgba(0,0,0,0.05);
+
+  transition: all 0.25s ease;
+}
+
+.contentCard:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.08),
+    0 18px 40px rgba(0,0,0,0.1);
+}
+
+/* title */
+
+.contentCard h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* text */
+
+.contentCard p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* list */
+
+.checkList {
+  margin-top: 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.checkList li {
+  position: relative;
+  padding-right: 24px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.checkList li::before {
+  content: "✔";
+  position: absolute;
+  right: 0;
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+
+/* responsive */
+
+@media (min-width: 640px) {
+  .contentGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .contentGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sectionHead h2 {
+    font-size: 2.4rem;
+  }
+}

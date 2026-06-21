@@ -1,8 +1,328 @@
-.title {
-    font-size: 2rem;
-    margin-bottom: 10px;
+/* =========================
+   Layout Base
+========================= */
+
+.homeWrapper{
+  overflow:hidden;
 }
 
-.subtitle {
-    color: var(--muted);
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  padding:0 16px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.heroSection{
+  padding:60px 0 40px;
+}
+
+.heroContainer{
+  display:grid;
+  gap:40px;
+}
+
+.heroContent{
+  max-width:520px;
+}
+
+.heroEyebrow{
+  font-size:12px;
+  letter-spacing:1px;
+  color:#777;
+}
+
+.heroTitle{
+  font-size:28px;
+  line-height:1.3;
+  margin:12px 0;
+  font-weight:700;
+}
+
+.gradientText{
+  background:linear-gradient(90deg,#111,#555);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.heroDescription{
+  font-size:14px;
+  line-height:1.7;
+  color:#666;
+}
+
+/* buttons */
+
+.heroButtons{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:20px;
+}
+
+.primaryButton{
+  background:#111;
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.secondaryButton{
+  background:white;
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+/* stats */
+
+.statsGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:28px;
+}
+
+.statCard{
+  background:#f7f7f7;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.statNumber{
+  display:block;
+  font-size:18px;
+  font-weight:700;
+}
+
+.statLabel{
+  font-size:11px;
+  color:#666;
+}
+
+/* visual */
+
+.heroVisual{
+  display:flex;
+  justify-content:center;
+}
+
+.heroGlassCard{
+  width:100%;
+  max-width:320px;
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.glassHeader{
+  display:flex;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.glassHeader span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ddd;
+}
+
+.glassBody h3{
+  font-size:15px;
+  margin-bottom:4px;
+}
+
+.glassBody p{
+  font-size:13px;
+  color:#777;
+  margin-bottom:10px;
+}
+
+.glassBody ul{
+  list-style:none;
+  padding:0;
+}
+
+.glassBody li{
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.featuresSection{
+  padding:60px 0;
+  background:#fafafa;
+}
+
+.sectionHeader{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.sectionEyebrow{
+  font-size:12px;
+  color:#777;
+}
+
+.sectionHeader h2{
+  font-size:22px;
+  margin-top:8px;
+}
+
+.featuresGrid{
+  display:grid;
+  gap:16px;
+}
+
+.featureCard{
+  background:white;
+  padding:18px;
+  border-radius:12px;
+  border:1px solid #eee;
+}
+
+/* icon */
+
+.featureIcon{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:#f3f3f3;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+}
+
+.featureIcon svg{
+  width:18px;
+  height:18px;
+}
+/* title */
+
+.featureTitle{
+  font-size:15px;
+  font-weight:600;
+}
+
+/* description */
+
+.featureDesc{
+  font-size:13px;
+  color:#666;
+  line-height:1.6;
+}
+
+.featureCard h3{
+  font-size:15px;
+  margin-bottom:6px;
+}
+
+.featureCard p{
+  font-size:13px;
+  color:#666;
+  line-height:1.6;
+}
+/* header */
+
+.featureHeader{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.productsSection{
+  padding:60px 0;
+}
+
+.productsHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.productsHeader h2{
+  font-size:20px;
+}
+
+.catalogLink{
+  background:none;
+  border:none;
+  font-size:13px;
+  cursor:pointer;
+  color:#444;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:640px){
+
+.heroButtons{
+flex-direction:row;
+}
+
+.featuresGrid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width:1024px){
+
+.heroSection{
+padding:100px 0;
+}
+
+.heroContainer{
+grid-template-columns:1fr 1fr;
+align-items:center;
+gap:80px;
+}
+
+.heroTitle{
+font-size:40px;
+}
+
+.heroDescription{
+font-size:16px;
+}
+
+.featuresGrid{
+grid-template-columns:repeat(4,1fr);
+}
+
+.statNumber{
+font-size:22px;
+}
+
 }
