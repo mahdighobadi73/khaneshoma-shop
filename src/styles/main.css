@@ -6,21 +6,3 @@
 
 /* Utility Styles */
 @import "./utilities.css";
-
-/* Base Styles */
-@import "./base.css";
-
-/* Component Styles */
-@import "../components/ProductGrid/ProductGrid.module.css";
-@import "../components/ProductCard/ProductCard.module.css";
-@import "../components/Header/Header.module.css";
-@import "../components/CartItem/CartItem.module.css";
-@import "../components/Toast/Toast.module.css";
-
-/* Page Styles */
-@import "../pages/Home/Home.module.css";
-@import "../pages/Cart/Cart.module.css";
-@import "../pages/About/About.module.css";
-@import "../pages/Contact/Contact.module.css";
-@import "../pages/ProductDetail/ProductDetail.module.css";
-@import "../pages/Products/Products.module.css";  

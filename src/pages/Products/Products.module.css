@@ -1,3 +1,96 @@
-.title {
-    margin-bottom: 24px;
+.productsPage{
+  padding:60px 0;
+}
+
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  padding:0 16px;
+}
+
+/* header */
+
+.pageHeader{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.pageEyebrow{
+  font-size:12px;
+  letter-spacing:1px;
+  color:#777;
+}
+
+.pageTitle{
+  font-size:26px;
+  margin:10px 0;
+}
+
+.pageDescription{
+  font-size:14px;
+  color:#666;
+}
+
+/* filters */
+
+.filtersPanel{
+  display:grid;
+  gap:16px;
+  margin-bottom:40px;
+  padding:18px;
+  border-radius:14px;
+  background:#fafafa;
+  border:1px solid #eee;
+}
+
+.filterGroup{
+  display:flex;
+  flex-direction:column;
+}
+
+.filterLabel{
+  font-size:12px;
+  margin-bottom:6px;
+  color:#666;
+}
+
+.filterInput,
+.filterSelect{
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  font-size:14px;
+  outline:none;
+  transition:.2s;
+}
+
+.filterInput:focus,
+.filterSelect:focus{
+  border-color:#111;
+}
+
+/* tablet */
+
+@media (min-width:640px){
+
+.filtersPanel{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+/* desktop */
+
+@media (min-width:900px){
+
+.filtersPanel{
+grid-template-columns:2fr 1fr 1fr;
+align-items:end;
+}
+
+.pageTitle{
+font-size:32px;
+}
+
 }

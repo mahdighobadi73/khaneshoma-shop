@@ -4,23 +4,30 @@ import { safeParseJSON, validateCart } from "../utils/format";
 const STORAGE_KEY = "khaneshoma_cart_v1";
 
 export default function useCart(products) {
-  const [cart, setCart] = useState([]);
+
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem(STORAGE_KEY);
+    return safeParseJSON(savedCart, []);
+  });
 
   useEffect(() => {
-    const savedCart = localStorage.getItem(STORAGE_KEY);
-    const parsed = safeParseJSON(savedCart, []);
-    const validated = validateCart(parsed, products);
-    setCart(validated);
+    if (!products || products.length === 0) return;
+
+    setCart((prev) => validateCart(prev, products));
   }, [products]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    } catch (err) {
+      console.error("Cart storage failed:", err);
+    }
   }, [cart]);
 
   const cartItems = useMemo(() => {
     return cart
       .map((item) => {
-        const product = products.find((product) => product.id === item.id);
+        const product = products.find((p) => p.id === item.id);
         if (!product) return null;
 
         return {
@@ -42,9 +49,7 @@ export default function useCart(products) {
 
   function addToCart(productId) {
     const product = products.find((item) => item.id === productId);
-    if (!product || product.stock <= 0) return false;
-
-    let added = false;
+    if (!product || product.stock <= 0) return;
 
     setCart((prev) => {
       const existing = prev.find((item) => item.id === productId);
@@ -52,7 +57,6 @@ export default function useCart(products) {
       if (existing) {
         if (existing.quantity >= product.stock) return prev;
 
-        added = true;
         return prev.map((item) =>
           item.id === productId
             ? { ...item, quantity: item.quantity + 1 }
@@ -60,11 +64,8 @@ export default function useCart(products) {
         );
       }
 
-      added = true;
       return [...prev, { id: productId, quantity: 1 }];
     });
-
-    return added;
   }
 
   function updateQuantity(productId, nextQuantity) {
@@ -80,7 +81,9 @@ export default function useCart(products) {
 
     setCart((prev) =>
       prev.map((item) =>
-        item.id === productId ? { ...item, quantity: safeQuantity } : item
+        item.id === productId
+          ? { ...item, quantity: safeQuantity }
+          : item
       )
     );
   }

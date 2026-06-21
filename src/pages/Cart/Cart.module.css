@@ -1,4 +1,171 @@
-.item {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
+.section {
+  padding: 80px 0;
+  background: #f7f7f7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+/* layout */
+
+.cartLayout {
+  display: grid;
+  gap: 32px;
+}
+
+.cartList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* header */
+
+.sectionHead {
+  margin-bottom: 20px;
+}
+
+.leftAlign {
+  text-align: right;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  color: var(--primary);
+  background: rgba(0,0,0,0.05);
+  padding: 5px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.sectionHead h2 {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.sectionHead p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* summary */
+
+.cartSummary {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+
+  border: 1px solid rgba(0,0,0,0.05);
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.05),
+    0 14px 40px rgba(0,0,0,0.06);
+
+  height: fit-content;
+}
+
+.cartSummary h3 {
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+
+/* rows */
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.total {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 1rem;
+}
+
+/* buttons */
+
+.primaryBtn {
+  margin-top: 18px;
+  background: var(--text);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.secondaryBtn {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.secondaryBtn:hover {
+  background: #f3f3f3;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* empty state */
+
+.emptyBox {
+  background: white;
+  padding: 40px;
+  border-radius: 18px;
+  text-align: center;
+
+  border: 1px solid rgba(0,0,0,0.05);
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.05),
+    0 16px 40px rgba(0,0,0,0.06);
+}
+
+.largeEmpty {
+  max-width: 500px;
+  margin: auto;
+}
+
+.emptyBox h2 {
+  margin-bottom: 10px;
+}
+
+.emptyBox p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* responsive */
+
+@media (min-width: 900px) {
+
+  .cartLayout {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+
+  .cartSummary {
+    position: sticky;
+    top: 100px;
+  }
+
 }

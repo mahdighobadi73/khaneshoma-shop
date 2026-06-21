@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
+import BottomNavbar from "./components/BottomNavbar/BottomNavbar";
 import Toast from "./components/Toast/Toast";
+
 import { PRODUCTS } from "./data/products";
 import useCart from "./hooks/useCart";
 
@@ -14,6 +16,7 @@ import Cart from "./pages/Cart/Cart";
 import { useEffect, useState } from "react";
 
 export default function App() {
+
   const [toastMessage, setToastMessage] = useState("");
 
   const {
@@ -33,12 +36,17 @@ export default function App() {
 
   useEffect(() => {
     if (!toastMessage) return;
+
     const timer = setTimeout(() => setToastMessage(""), 3000);
+
     return () => clearTimeout(timer);
+
   }, [toastMessage]);
 
   function handleAddToCart(productId) {
+
     const product = PRODUCTS.find((p) => p.id === productId);
+
     if (!product) return;
 
     const added = addToCart(productId);
@@ -57,18 +65,34 @@ export default function App() {
 
   return (
     <>
-      <Header cartCount={cartCount} />
+      {/* HEADER */}
+
+      <Header
+        cartCount={cartCount}
+        products={PRODUCTS}
+      />
+
+      {/* ROUTES */}
 
       <Routes>
+
         <Route
           path="/"
-          element={<Home products={PRODUCTS} onAddToCart={handleAddToCart} />}
+          element={
+            <Home
+              products={PRODUCTS}
+              onAddToCart={handleAddToCart}
+            />
+          }
         />
 
         <Route
           path="/products"
           element={
-            <Products products={PRODUCTS} onAddToCart={handleAddToCart} />
+            <Products
+              products={PRODUCTS}
+              onAddToCart={handleAddToCart}
+            />
           }
         />
 
@@ -98,7 +122,14 @@ export default function App() {
 
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
       </Routes>
+
+      {/* MOBILE NAVBAR */}
+
+      <BottomNavbar />
+
+      {/* TOAST */}
 
       <Toast message={toastMessage} />
     </>

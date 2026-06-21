@@ -1,20 +1,54 @@
 import { Link } from "react-router-dom";
 import { formatPrice } from "../../utils/format";
+import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ product, onAddToCart }) {
   return (
-    <div className="product-card">
-      <Link to={`/products/${product.id}`}>
-        <img src={product.image} alt={product.name} />
-        <h3>{product.name}</h3>
+    <article className={styles.card}>
+
+      <Link
+        to={`/products/${product.id}`}
+        className={styles.imageLink}
+      >
+        <div className={styles.imageWrapper}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className={styles.productImage}
+          />
+        </div>
       </Link>
 
-      <p>{product.description}</p>
-      <strong>{formatPrice(product.price)}</strong>
+      <div className={styles.cardBody}>
 
-      <button onClick={() => onAddToCart(product.id)}>
-        افزودن به سبد
-      </button>
-    </div>
+        <Link
+          to={`/products/${product.id}`}
+          className={styles.productName}
+        >
+          {product.name}
+        </Link>
+
+        <p className={styles.productDescription}>
+          {product.description}
+        </p>
+
+        <div className={styles.cardFooter}>
+
+          <strong className={styles.productPrice}>
+            {formatPrice(product.price)}
+          </strong>
+
+          <button
+            className={styles.addButton}
+            onClick={() => onAddToCart(product.id)}
+          >
+            افزودن
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
   );
 }

@@ -1,174 +1,172 @@
 import { useState } from "react";
 import { sanitizeInput } from "../../utils/format";
+import styles from "./Contact.module.css"
 
 const INITIAL_FORM = {
-    name: "",
-    email: "",
-    message: ""
+  name: "",
+  email: "",
+  message: ""
 };
 
 export default function Contact() {
-    const [formData, setFormData] = useState(INITIAL_FORM);
-    const [errors, setErrors] = useState({});
-    const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const validate = () => {
-        const newErrors = {};
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validate = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!formData.name.trim()) {
-            newErrors.name = "وارد کردن نام الزامی است.";
-        }
+    if (!formData.name.trim()) {
+      newErrors.name = "وارد کردن نام الزامی است.";
+    }
 
-        if (!formData.email.trim()) {
-            newErrors.email = "ایمیل الزامی است.";
-        } else if (!emailRegex.test(formData.email)) {
-            newErrors.email = "فرمت ایمیل صحیح نیست.";
-        }
+    if (!formData.email.trim()) {
+      newErrors.email = "ایمیل الزامی است.";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "فرمت ایمیل صحیح نیست.";
+    }
 
-        if (!formData.message.trim()) {
-            newErrors.message = "نوشتن پیام الزامی است.";
-        }
+    if (!formData.message.trim()) {
+      newErrors.message = "نوشتن پیام الزامی است.";
+    }
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    const handleChange = e => {
-        const { name, value } = e.target;
-        const maxLength = name === "message" ? 500 : 120;
+  const handleChange = e => {
+    const { name, value } = e.target;
+    const maxLength = name === "message" ? 500 : 120;
 
-        setFormData(prev => ({
-            ...prev,
-            [name]: sanitizeInput(value, maxLength)
-        }));
+    const sanitized = sanitizeInput(value, maxLength);
 
-        if (errors[name]) {
-            setErrors(prev => ({
-                ...prev,
-                [name]: ""
-            }));
-        }
-    };
+    setFormData(prev => ({
+      ...prev,
+      [name]: sanitized
+    }));
 
-    const handleSubmit = async e => {
-        e.preventDefault();
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
+  };
 
-        if (!validate()) return;
+  const handleSubmit = async e => {
+    e.preventDefault();
 
-        setLoading(true);
+    if (loading) return;
 
-        // شبیه‌سازی ارسال به سرور
-        setTimeout(() => {
-            setLoading(false);
-            setSubmitted(true);
-            setFormData(INITIAL_FORM);
+    if (!validate()) return;
 
-            setTimeout(() => setSubmitted(false), 4000);
-        }, 1500);
-    };
+    setLoading(true);
 
-    return (
-        <section className="section">
-            <div className="container contact-layout">
-                <div>
-                    <div className="section-head left-align">
-                        <span className="eyebrow">تماس با ما</span>
-                        <h2>ارتباط با تیم ما</h2>
-                        <p>
-                            اگر سوالی درباره خدمات یا همکاری دارید، از طریق فرم
-                            زیر با ما در ارتباط باشید.
-                        </p>
-                    </div>
+    // simulate API request
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+      setFormData(INITIAL_FORM);
 
-                    <div className="content-card contact-info">
-                        <p>
-                            <strong>آدرس:</strong> تهران، نیاوران، پلاک ۱۲۳
-                        </p>
-                        <p>
-                            <strong>تلفن:</strong> 021-12345678
-                        </p>
-                        <p>
-                            <strong>ایمیل:</strong> info@khaneshoma.ir
-                        </p>
-                        <p>
-                            <strong>ساعات کاری:</strong> شنبه تا پنجشنبه، ۹ تا
-                            ۱۸
-                        </p>
-                    </div>
-                </div>
+      setTimeout(() => setSubmitted(false), 4000);
+    }, 1500);
+  };
 
-                <form
-                    className="contact-form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                >
-                    <div className="form-group">
-                        <label htmlFor="name">نام</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            placeholder="نام خود را وارد کنید"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className={errors.name ? "input-error" : ""}
-                        />
-                        {errors.name && (
-                            <small className="error-text">{errors.name}</small>
-                        )}
-                    </div>
+  return (
+    <section className="contact-section">
+      <div className="container contact-layout">
 
-                    <div className="form-group">
-                        <label htmlFor="email">ایمیل</label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="example@email.com"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className={errors.email ? "input-error" : ""}
-                        />
-                        {errors.email && (
-                            <small className="error-text">{errors.email}</small>
-                        )}
-                    </div>
+        {/* LEFT SIDE */}
+        <div>
+          <div className="section-head left-align">
+            <span className="eyebrow">تماس با ما</span>
+            <h2>ارتباط با تیم ما</h2>
+            <p>
+              اگر سوالی درباره خدمات یا همکاری دارید، از طریق فرم زیر با ما در ارتباط باشید.
+            </p>
+          </div>
 
-                    <div className="form-group">
-                        <label htmlFor="message">پیام</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            rows="6"
-                            placeholder="پیام خود را بنویسید..."
-                            value={formData.message}
-                            onChange={handleChange}
-                            className={errors.message ? "input-error" : ""}
-                        />
-                        {errors.message && (
-                            <small className="error-text">
-                                {errors.message}
-                            </small>
-                        )}
-                    </div>
+          <div className="content-card contact-info">
+            <p><strong>آدرس:</strong> تهران، نیاوران، پلاک ۱۲۳</p>
+            <p><strong>تلفن:</strong> 021-12345678</p>
+            <p><strong>ایمیل:</strong> info@khaneshoma.ir</p>
+            <p><strong>ساعات کاری:</strong> شنبه تا پنجشنبه، ۹ تا ۱۸</p>
+          </div>
+        </div>
 
-                    <button
-                        type="submit"
-                        className={`primary-btn full-width ${loading ? "loading" : ""}`}
-                        disabled={loading}
-                    >
-                        {loading ? "در حال ارسال..." : "ارسال پیام"}
-                    </button>
+        {/* FORM */}
+        <form className="contact-form" onSubmit={handleSubmit} noValidate>
 
-                    {submitted && (
-                        <div className="success-box fade-in">
-                            پیام شما با موفقیت ارسال شد 🌱
-                        </div>
-                    )}
-                </form>
+          <div className="form-group">
+            <label htmlFor="name">نام</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="نام خود را وارد کنید"
+              value={formData.name}
+              onChange={handleChange}
+              className={errors.name ? "input-error" : ""}
+            />
+            {errors.name && <small className="error-text">{errors.name}</small>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">ایمیل</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="example@email.com"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? "input-error" : ""}
+            />
+            {errors.email && <small className="error-text">{errors.email}</small>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="message">پیام</label>
+
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              maxLength="500"
+              placeholder="پیام خود را بنویسید..."
+              value={formData.message}
+              onChange={handleChange}
+              className={errors.message ? "input-error" : ""}
+            />
+
+            <div className="textarea-footer">
+              {errors.message && (
+                <small className="error-text">{errors.message}</small>
+              )}
+              <span className="char-count">
+                {formData.message.length}/500
+              </span>
             </div>
-        </section>
-    );
+          </div>
+
+          <button
+            type="submit"
+            className={`primary-btn full-width ${loading ? "loading" : ""}`}
+            disabled={loading}
+          >
+            {loading ? "در حال ارسال..." : "ارسال پیام"}
+          </button>
+
+          {submitted && (
+            <div className="success-box fade-in">
+              پیام شما با موفقیت ارسال شد 🌱
+            </div>
+          )}
+
+        </form>
+      </div>
+    </section>
+  );
 }

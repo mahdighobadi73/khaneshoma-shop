@@ -1,0 +1,53 @@
+.bottomNav {
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 65px;
+
+  background: white;
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+.bottomNav a {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-decoration: none;
+
+  font-size: 0.75rem;
+
+  color: #777;
+
+  gap: 4px;
+}
+
+.bottomNav a span {
+  font-size: 1.3rem;
+}
+
+.bottomNav a.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* desktop hide */
+
+@media (min-width:768px) {
+
+  .bottomNav {
+    display: none;
+  }
+
+}

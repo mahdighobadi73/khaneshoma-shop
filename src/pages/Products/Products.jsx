@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import ProductGrid from "/src/components/ProductGrid/ProductGrid";
 import { getCategories, sanitizeInput } from "../../utils/format";
+import styles from "./Products.module.css";
 
 export default function Products({ products, onAddToCart }) {
+
   const categories = useMemo(() => getCategories(products), [products]);
 
   const [search, setSearch] = useState("");
@@ -24,8 +26,15 @@ export default function Products({ products, onAddToCart }) {
     }
 
     if (selectedCategory !== "همه") {
+<<<<<<< HEAD
       result = result.filter((product) => product.category === selectedCategory);
     } 
+=======
+      result = result.filter(
+        (product) => product.category === selectedCategory
+      );
+    }
+>>>>>>> 5cbd245e0b9ae09c91adbc97f1b071168c2729b0
 
     switch (sortBy) {
       case "price-asc":
@@ -48,30 +57,41 @@ export default function Products({ products, onAddToCart }) {
   }, [products, search, selectedCategory, sortBy]);
 
   return (
-    <section className="section">
-      <div className="container">
-        <div className="section-head">
-          <span className="eyebrow">فروشگاه</span>
-          <h2>تمام محصولات</h2>
-          <p>جستجو، فیلتر و مرتب‌سازی حرفه‌ای برای پیدا کردن محصول مناسب.</p>
+    <section className={styles.productsPage}>
+
+      <div className={styles.container}>
+
+        <div className={styles.pageHeader}>
+          <span className={styles.pageEyebrow}>فروشگاه</span>
+          <h2 className={styles.pageTitle}>تمام محصولات</h2>
+          <p className={styles.pageDescription}>
+            جستجو، فیلتر و مرتب‌سازی حرفه‌ای برای پیدا کردن محصول مناسب.
+          </p>
         </div>
 
-        <div className="filters-panel">
-          <div className="form-group">
-            <label>جستجو</label>
+        <div className={styles.filtersPanel}>
+
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>جستجو</label>
             <input
+              className={styles.filterInput}
               type="text"
               value={search}
-              onChange={(e) => setSearch(sanitizeInput(e.target.value, 100))}
+              onChange={(e) =>
+                setSearch(sanitizeInput(e.target.value, 100))
+              }
               placeholder="نام محصول، دسته‌بندی یا توضیح..."
             />
           </div>
 
-          <div className="form-group">
-            <label>دسته‌بندی</label>
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>دسته‌بندی</label>
             <select
+              className={styles.filterSelect}
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) =>
+                setSelectedCategory(e.target.value)
+              }
             >
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -81,9 +101,13 @@ export default function Products({ products, onAddToCart }) {
             </select>
           </div>
 
-          <div className="form-group">
-            <label>مرتب‌سازی</label>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>مرتب‌سازی</label>
+            <select
+              className={styles.filterSelect}
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
               <option value="default">پیش‌فرض</option>
               <option value="price-asc">ارزان‌ترین</option>
               <option value="price-desc">گران‌ترین</option>
@@ -91,6 +115,7 @@ export default function Products({ products, onAddToCart }) {
               <option value="name-asc">نام (الفبا)</option>
             </select>
           </div>
+
         </div>
 
         <ProductGrid
@@ -98,7 +123,9 @@ export default function Products({ products, onAddToCart }) {
           onAddToCart={onAddToCart}
           emptyMessage="هیچ محصولی با این فیلترها پیدا نشد."
         />
+
       </div>
+
     </section>
   );
 }

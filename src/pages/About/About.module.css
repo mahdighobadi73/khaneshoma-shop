@@ -1,0 +1,156 @@
+/* =========================
+SECTION
+========================= */
+
+.aboutSection {
+  padding: 80px 0;
+  background: #fafafa;
+}
+
+/* =========================
+SECTION HEADER
+========================= */
+
+.sectionHead {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 60px auto;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--primary);
+  background: rgba(0,0,0,0.05);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.sectionHead h2 {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.sectionHead p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+/* =========================
+GRID
+========================= */
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.contentCard {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle gradient hover */
+
+.contentCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(0,0,0,0.03),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.contentCard:hover::before {
+  opacity: 1;
+}
+
+.contentCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+/* =========================
+CARD TYPOGRAPHY
+========================= */
+
+.contentCard h3 {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.contentCard p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* =========================
+CHECK LIST
+========================= */
+
+.checkList {
+  margin-top: 12px;
+  padding-right: 18px;
+}
+
+.checkList li {
+  position: relative;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* custom bullet */
+
+.checkList li::before {
+  content: "✔";
+  position: absolute;
+  right: -18px;
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .aboutSection {
+    padding: 60px 0;
+  }
+
+  .sectionHead h2 {
+    font-size: 1.6rem;
+  }
+
+  .contentGrid {
+    gap: 18px;
+  }
+
+  .contentCard {
+    padding: 22px;
+  }
+
+}
