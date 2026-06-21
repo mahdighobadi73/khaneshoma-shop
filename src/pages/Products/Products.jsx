@@ -25,7 +25,7 @@ export default function Products({ products, onAddToCart }) {
 
     if (selectedCategory !== "همه") {
       result = result.filter((product) => product.category === selectedCategory);
-    }
+    } 
 
     switch (sortBy) {
       case "price-asc":
