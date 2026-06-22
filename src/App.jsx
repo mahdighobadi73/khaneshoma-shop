@@ -15,9 +15,9 @@ import Cart from "./pages/Cart/Cart";
 
 import { useEffect, useState } from "react";
 
-export default function App() {
+export default function App () {
 
-  const [toastMessage, setToastMessage] = useState("");
+  const [ toastMessage, setToastMessage ] = useState( "" );
 
   const {
     cartItems,
@@ -28,51 +28,51 @@ export default function App() {
     decrement,
     removeFromCart,
     clearCart,
-  } = useCart(PRODUCTS);
+  } = useCart( PRODUCTS );
 
-  function showToast(message) {
-    setToastMessage(message);
+  function showToast ( message ) {
+    setToastMessage( message );
   }
 
-  useEffect(() => {
-    if (!toastMessage) return;
+  useEffect( () => {
+    if ( !toastMessage ) return;
 
-    const timer = setTimeout(() => setToastMessage(""), 3000);
+    const timer = setTimeout( () => setToastMessage( "" ), 3000 );
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout( timer );
 
-  }, [toastMessage]);
+  }, [ toastMessage ] );
 
-  function handleAddToCart(productId) {
+  function handleAddToCart ( productId ) {
+    const product = PRODUCTS.find( ( p ) => p.id === productId );
+    if ( !product ) return;
 
-    const product = PRODUCTS.find((p) => p.id === productId);
-
-    if (!product) return;
-
-    const added = addToCart(productId);
-
-    if (added) {
-      showToast(`"${product.name}" به سبد اضافه شد.`);
-    } else {
-      showToast("موجودی کافی نیست.");
+    const cartItem = cartItems.find( ( item ) => item.id === productId )?? null;
+    console.log(cartItem)
+    if ( product.stock <= 0 || cartItem?.quantity >= product.stock ) {
+      showToast( "موجودی کافی نیست." );
+      return;
     }
+
+    addToCart( productId );
+    showToast( `"${ product.name }" به سبد اضافه شد.` );
   }
 
-  function handleCheckout() {
+  function handleCheckout () {
     clearCart();
-    showToast("✓ سفارش ثبت شد.");
+    showToast( "✓ سفارش ثبت شد." );
   }
 
   return (
     <>
-      {/* HEADER */}
+      {/* HEADER */ }
 
       <Header
-        cartCount={cartCount}
-        products={PRODUCTS}
+        cartCount={ cartCount }
+        products={ PRODUCTS }
       />
 
-      {/* ROUTES */}
+      {/* ROUTES */ }
 
       <Routes>
 
@@ -80,8 +80,8 @@ export default function App() {
           path="/"
           element={
             <Home
-              products={PRODUCTS}
-              onAddToCart={handleAddToCart}
+              products={ PRODUCTS }
+              onAddToCart={ handleAddToCart }
             />
           }
         />
@@ -90,8 +90,8 @@ export default function App() {
           path="/products"
           element={
             <Products
-              products={PRODUCTS}
-              onAddToCart={handleAddToCart}
+              products={ PRODUCTS }
+              onAddToCart={ handleAddToCart }
             />
           }
         />
@@ -100,8 +100,8 @@ export default function App() {
           path="/products/:id"
           element={
             <ProductDetail
-              products={PRODUCTS}
-              onAddToCart={handleAddToCart}
+              products={ PRODUCTS }
+              onAddToCart={ handleAddToCart }
             />
           }
         />
@@ -110,28 +110,28 @@ export default function App() {
           path="/cart"
           element={
             <Cart
-              cartItems={cartItems}
-              cartTotal={cartTotal}
-              onIncrement={increment}
-              onDecrement={decrement}
-              onRemove={removeFromCart}
-              onCheckout={handleCheckout}
+              cartItems={ cartItems }
+              cartTotal={ cartTotal }
+              onIncrement={ increment }
+              onDecrement={ decrement }
+              onRemove={ removeFromCart }
+              onCheckout={ handleCheckout }
             />
           }
         />
 
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={ <About /> } />
+        <Route path="/contact" element={ <Contact /> } />
 
       </Routes>
 
-      {/* MOBILE NAVBAR */}
+      {/* MOBILE NAVBAR */ }
 
       <BottomNavbar />
 
-      {/* TOAST */}
+      {/* TOAST */ }
 
-      <Toast message={toastMessage} />
+      <Toast message={ toastMessage } />
     </>
   );
 }

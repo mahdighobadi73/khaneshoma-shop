@@ -1,8 +1,122 @@
-/* CSS Variables */
-@import "./variables.css";
+/* =========================
+   RESET
+========================= */
 
-/* Global Styles */
-@import "./globals.css";
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* Utility Styles */
-@import "./utilities.css";
+/* =========================
+   ROOT
+========================= */
+
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: "Vazirmatn", system-ui, sans-serif;
+    background: #f7f8fa;
+    color: #222;
+    direction: rtl;
+
+    /* جلوگیری از اسکرول افقی */
+    overflow-x: hidden;
+}
+
+/* =========================
+   APP LAYOUT
+========================= */
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   HEADER FIX
+========================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: white;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+}
+
+/* =========================
+   MOBILE SAFE AREA
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding-bottom: 70px;
+        /* فضای BottomNavbar */
+    }
+
+}
+
+/* =========================
+   MEDIA FIX
+========================= */
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =========================
+   BUTTON RESET
+========================= */
+
+button {
+    font-family: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* =========================
+   LINK RESET
+========================= */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================
+   جلوگیری از overflow
+========================= */
+
+div,
+section,
+article,
+main {
+    max-width: 100%;
+}
