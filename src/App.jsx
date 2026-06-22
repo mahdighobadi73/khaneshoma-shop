@@ -12,126 +12,125 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
+import PaymentVerify from "./pages/PaymentVerify/PaymentVerify";
 
 import { useEffect, useState } from "react";
 
-export default function App () {
+export default function App() {
+    const [toastMessage, setToastMessage] = useState("");
 
-  const [ toastMessage, setToastMessage ] = useState( "" );
+    const {
+        cartItems,
+        cartCount,
+        cartTotal,
+        addToCart,
+        increment,
+        decrement,
+        removeFromCart,
+        clearCart
+    } = useCart(PRODUCTS);
 
-  const {
-    cartItems,
-    cartCount,
-    cartTotal,
-    addToCart,
-    increment,
-    decrement,
-    removeFromCart,
-    clearCart,
-  } = useCart( PRODUCTS );
-
-  function showToast ( message ) {
-    setToastMessage( message );
-  }
-
-  useEffect( () => {
-    if ( !toastMessage ) return;
-
-    const timer = setTimeout( () => setToastMessage( "" ), 3000 );
-
-    return () => clearTimeout( timer );
-
-  }, [ toastMessage ] );
-
-  function handleAddToCart ( productId ) {
-    const product = PRODUCTS.find( ( p ) => p.id === productId );
-    if ( !product ) return;
-
-    const cartItem = cartItems.find( ( item ) => item.id === productId )?? null;
-    console.log(cartItem)
-    if ( product.stock <= 0 || cartItem?.quantity >= product.stock ) {
-      showToast( "موجودی کافی نیست." );
-      return;
+    function showToast(message) {
+        setToastMessage(message);
     }
 
-    addToCart( productId );
-    showToast( `"${ product.name }" به سبد اضافه شد.` );
-  }
+    useEffect(() => {
+        if (!toastMessage) return;
 
-  function handleCheckout () {
-    clearCart();
-    showToast( "✓ سفارش ثبت شد." );
-  }
+        const timer = setTimeout(() => setToastMessage(""), 3000);
 
-  return (
-    <>
-      {/* HEADER */ }
+        return () => clearTimeout(timer);
+    }, [toastMessage]);
 
-      <Header
-        cartCount={ cartCount }
-        products={ PRODUCTS }
-      />
+    function handleAddToCart(productId) {
+        const product = PRODUCTS.find(p => p.id === productId);
+        if (!product) return;
 
-      {/* ROUTES */ }
+        const cartItem = cartItems.find(item => item.id === productId) ?? null;
+        console.log(cartItem);
+        if (product.stock <= 0 || cartItem?.quantity >= product.stock) {
+            showToast("موجودی کافی نیست.");
+            return;
+        }
 
-      <Routes>
+        addToCart(productId);
+        showToast(`"${product.name}" به سبد اضافه شد.`);
+    }
 
-        <Route
-          path="/"
-          element={
-            <Home
-              products={ PRODUCTS }
-              onAddToCart={ handleAddToCart }
-            />
-          }
-        />
+    function handleCheckout() {
+        navigate("/Checkout", {
+  state: { cartItems, cartTotal },
+});
+        showToast("✓ سفارش ثبت شد.");
+    }
 
-        <Route
-          path="/products"
-          element={
-            <Products
-              products={ PRODUCTS }
-              onAddToCart={ handleAddToCart }
-            />
-          }
-        />
+    return (
+        <>
+            {/* HEADER */}
 
-        <Route
-          path="/products/:id"
-          element={
-            <ProductDetail
-              products={ PRODUCTS }
-              onAddToCart={ handleAddToCart }
-            />
-          }
-        />
+            <Header cartCount={cartCount} products={PRODUCTS} />
 
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cartItems={ cartItems }
-              cartTotal={ cartTotal }
-              onIncrement={ increment }
-              onDecrement={ decrement }
-              onRemove={ removeFromCart }
-              onCheckout={ handleCheckout }
-            />
-          }
-        />
+            {/* ROUTES */}
 
-        <Route path="/about" element={ <About /> } />
-        <Route path="/contact" element={ <Contact /> } />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <Home
+                            products={PRODUCTS}
+                            onAddToCart={handleAddToCart}
+                        />
+                    }
+                />
 
-      </Routes>
+                <Route
+                    path="/products"
+                    element={
+                        <Products
+                            products={PRODUCTS}
+                            onAddToCart={handleAddToCart}
+                        />
+                    }
+                />
 
-      {/* MOBILE NAVBAR */ }
+                <Route
+                    path="/products/:id"
+                    element={
+                        <ProductDetail
+                            products={PRODUCTS}
+                            onAddToCart={handleAddToCart}
+                        />
+                    }
+                />
 
-      <BottomNavbar />
+                <Route
+                    path="/cart"
+                    element={
+                        <Cart
+                            cartItems={cartItems}
+                            cartTotal={cartTotal}
+                            onIncrement={increment}
+                            onDecrement={decrement}
+                            onRemove={removeFromCart}
+                            onCheckout={handleCheckout}
+                        />
+                    }
+                />
 
-      {/* TOAST */ }
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/verify-payment" element={<PaymentVerify />} />
+            </Routes>
 
-      <Toast message={ toastMessage } />
-    </>
-  );
+            {/* MOBILE NAVBAR */}
+
+            <BottomNavbar />
+
+            {/* TOAST */}
+
+            <Toast message={toastMessage} />
+        </>
+    );
 }

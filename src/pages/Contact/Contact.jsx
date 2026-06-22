@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sanitizeInput } from "../../utils/format";
-import styles from "./Contact.module.css"
+import styles from "./Contact.module.css";
 
 const INITIAL_FORM = {
   name: "",
@@ -59,12 +59,10 @@ export default function Contact() {
     e.preventDefault();
 
     if (loading) return;
-
     if (!validate()) return;
 
     setLoading(true);
 
-    // simulate API request
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -75,8 +73,8 @@ export default function Contact() {
   };
 
   return (
-    <section className="contact-section">
-      <div className="container contact-layout">
+    <section className={styles["contact-section"]}>
+      <div className={`container ${styles["contact-layout"]}`}>
 
         {/* LEFT SIDE */}
         <div>
@@ -88,7 +86,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="content-card contact-info">
+          <div className={`content-card ${styles["contact-info"]}`}>
             <p><strong>آدرس:</strong> تهران، نیاوران، پلاک ۱۲۳</p>
             <p><strong>تلفن:</strong> 021-12345678</p>
             <p><strong>ایمیل:</strong> info@khaneshoma.ir</p>
@@ -97,9 +95,13 @@ export default function Contact() {
         </div>
 
         {/* FORM */}
-        <form className="contact-form" onSubmit={handleSubmit} noValidate>
+        <form
+          className={styles["contact-form"]}
+          onSubmit={handleSubmit}
+          noValidate
+        >
 
-          <div className="form-group">
+          <div className={styles["form-group"]}>
             <label htmlFor="name">نام</label>
             <input
               id="name"
@@ -108,12 +110,14 @@ export default function Contact() {
               placeholder="نام خود را وارد کنید"
               value={formData.name}
               onChange={handleChange}
-              className={errors.name ? "input-error" : ""}
+              className={errors.name ? styles["input-error"] : ""}
             />
-            {errors.name && <small className="error-text">{errors.name}</small>}
+            {errors.name && (
+              <small className={styles["error-text"]}>{errors.name}</small>
+            )}
           </div>
 
-          <div className="form-group">
+          <div className={styles["form-group"]}>
             <label htmlFor="email">ایمیل</label>
             <input
               id="email"
@@ -122,12 +126,14 @@ export default function Contact() {
               placeholder="example@email.com"
               value={formData.email}
               onChange={handleChange}
-              className={errors.email ? "input-error" : ""}
+              className={errors.email ? styles["input-error"] : ""}
             />
-            {errors.email && <small className="error-text">{errors.email}</small>}
+            {errors.email && (
+              <small className={styles["error-text"]}>{errors.email}</small>
+            )}
           </div>
 
-          <div className="form-group">
+          <div className={styles["form-group"]}>
             <label htmlFor="message">پیام</label>
 
             <textarea
@@ -138,14 +144,16 @@ export default function Contact() {
               placeholder="پیام خود را بنویسید..."
               value={formData.message}
               onChange={handleChange}
-              className={errors.message ? "input-error" : ""}
+              className={errors.message ? styles["input-error"] : ""}
             />
 
-            <div className="textarea-footer">
+            <div className={styles["textarea-footer"]}>
               {errors.message && (
-                <small className="error-text">{errors.message}</small>
+                <small className={styles["error-text"]}>
+                  {errors.message}
+                </small>
               )}
-              <span className="char-count">
+              <span className={styles["char-count"]}>
                 {formData.message.length}/500
               </span>
             </div>
@@ -153,18 +161,19 @@ export default function Contact() {
 
           <button
             type="submit"
-            className={`primary-btn full-width ${loading ? "loading" : ""}`}
+            className={`primary-btn ${styles["full-width"]} ${
+              loading ? styles["loading"] : ""
+            }`}
             disabled={loading}
           >
             {loading ? "در حال ارسال..." : "ارسال پیام"}
           </button>
 
           {submitted && (
-            <div className="success-box fade-in">
+            <div className={`${styles["success-box"]} ${styles["fade-in"]}`}>
               پیام شما با موفقیت ارسال شد 🌱
             </div>
           )}
-
         </form>
       </div>
     </section>

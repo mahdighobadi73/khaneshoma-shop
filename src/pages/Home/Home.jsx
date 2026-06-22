@@ -93,7 +93,7 @@ export default function Home ( { products = [], onAddToCart } ) {
 
                         <button
                             className={ styles.catalogLink }
-                            onClick={ () => navigate( "/products" ) }
+                            onClick={ () => navigate( "/Products" ) }
                         >
                             مشاهده همه →
                         </button>
