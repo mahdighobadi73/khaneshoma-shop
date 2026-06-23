@@ -1,36 +1,22 @@
-import ProductGrid from "/src/components/ProductGrid/ProductGrid";
-import { toPersianNumber } from "../../utils/format";
+import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import styles from "./Home.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const STATS = [
-    { label: "محصول ویژه", value: 8, suffix: "+" },
-    { label: "سال تجربه در فروش", value: 15, suffix: "+" },
-    { label: "پشتیبانی مشتریان", value: "24 / 7", suffix: "" }
-];
 
-const FEATURES = [
-    {
-        title: "تضمین اصالت کالا",
-        desc: "تمام محصولات با ضمانت اصالت و کیفیت از برندهای معتبر انتخاب شده‌اند."
-    },
-    {
-        title: "ارسال سریع و مطمئن",
-        desc: "سفارش شما در کوتاه‌ترین زمان ممکن با بسته‌بندی ایمن ارسال می‌شود."
-    },
-    {
-        title: "پرداخت کاملاً امن",
-        desc: "پرداخت از طریق درگاه‌های بانکی معتبر انجام می‌شود."
-    },
-    {
-        title: "مشاوره قبل از خرید",
-        desc: "کارشناسان ما آماده‌اند تا بهترین انتخاب را به شما پیشنهاد دهند."
-    }
-];
 
 export default function Home ( { products = [], onAddToCart } ) {
-    const navigate = useNavigate();
     const featuredProducts = products.slice( 0, 4 );
+    const categories = [
+        ...new Set( products.map( p => p.category ).filter( Boolean ) )
+    ];
+    const amazingOffers =
+        products.filter( p => p.badge === "ویژه" );
+
+    const newestProducts =
+        products.filter( p => p.badge === "جدید" );
+
+    const bestSellers =
+        products.filter( p => p.badge === "پرفروش" );
 
     return (
         <main className={ styles.homeWrapper }>
@@ -54,34 +40,57 @@ export default function Home ( { products = [], onAddToCart } ) {
                             ساده، سریع و مطمئن.
                         </p>
 
-                        <div className={ styles.statsGrid }>
-                            { STATS.map( ( stat, i ) => (
-                                <div key={ i } className={ styles.statCard }>
-                                    <strong className={ styles.statNumber }>
-                                        { toPersianNumber( stat.value ) }
-                                        { stat.suffix }
-                                    </strong>
-                                    <span className={ styles.statLabel }>{ stat.label }</span>
-                                </div>
-                            ) ) }
-                        </div>
                     </div>
 
                     <div className={ styles.heroVisual }>
-                        <div className={ styles.heroGlassCard }>
-                            <h3>کیفیت، زیبایی و اعتماد</h3>
-                            <p>تجربه خریدی مدرن و مطمئن</p>
+                        <section className={ styles.heroBanner }>
+                            <img
+                                src="https://images.unsplash.com/photo-1484154218962-a197022b5858"
+                                alt="دکوراسیون خانه و آشپزخانه"
+                            />
 
-                            <ul>
-                                <li>محصولات اصل و باکیفیت</li>
-                                <li>ارسال سریع و بسته‌بندی ایمن</li>
-                                <li>ضمانت بازگشت وجه</li>
-                            </ul>
-                        </div>
+                            <div className={ styles.heroOverlay }>
+                                <h2>
+                                    فروش ویژه محصولات خانه و دکوراسیون
+                                </h2>
 
-                        <div className={ styles.heroDecoration }></div>
+                                <p>
+                                    بهترین محصولات با تضمین کیفیت و ارسال سریع
+                                </p>
+
+                                <Link to="/products" className={ styles.heroButton }>
+                                    مشاهده محصولات
+                                </Link>
+                            </div>
+                        </section>
                     </div>
                 </div>
+            </section>
+
+            {/* CATEGORIES */ }
+            <section className={ styles.categoriesSection }>
+
+                <div className="container">
+
+                    <h2>دسته‌بندی‌ها</h2>
+
+                    <div className={ styles.categoriesGrid }>
+
+                        { categories.map( category => (
+
+                            <div
+                                key={ category }
+                                className={ styles.categoryCard }
+                            >
+                                { category }
+                            </div>
+
+                        ) ) }
+
+                    </div>
+
+                </div>
+
             </section>
 
             {/* PRODUCTS */ }
@@ -91,12 +100,9 @@ export default function Home ( { products = [], onAddToCart } ) {
                     <div className={ styles.productsHeader }>
                         <h2>محصولات منتخب امروز</h2>
 
-                        <button
-                            className={ styles.catalogLink }
-                            onClick={ () => navigate( "/Products" ) }
-                        >
+                        <Link to="/products" className={ styles.catalogLink }>
                             مشاهده همه →
-                        </button>
+                        </Link>
                     </div>
 
                     <ProductGrid
@@ -106,27 +112,86 @@ export default function Home ( { products = [], onAddToCart } ) {
                     />
                 </div>
             </section>
+            {/* AMAZING OFFERS */ }
+            <section className={ styles.section }>
 
-            {/* FEATURES */ }
-            <section className={ styles.featuresSection }>
                 <div className="container">
 
-                    <div className={ styles.sectionHeader }>
-                        <span className={ styles.sectionEyebrow }>چرا ما</span>
-                        <h2>ارزش‌هایی که به آن پایبندیم</h2>
+                    <div className={ styles.sectionHead }>
+                        <h2>پیشنهاد شگفت‌انگیز</h2>
                     </div>
 
-                    <div className={ styles.featuresGrid }>
-                        { FEATURES.map( ( feature, i ) => (
-                            <div key={ i } className={ styles.featureCard }>
-                                <h3 className={ styles.featureTitle }>{ feature.title }</h3>
-                                <p className={ styles.featureDesc }>{ feature.desc }</p>
-                            </div>
-                        ) ) }
-                    </div>
+                    <ProductGrid
+                        products={ amazingOffers }
+                        onAddToCart={ onAddToCart }
+                        emptyMessage="فعلا پیشنهاد شگفت‌انگیزی موجود نیست."
+                    />
 
                 </div>
+
             </section>
+            {/* NEWEST PRODUCTS */ }
+            <section className={ styles.section }>
+
+                <div className="container">
+
+                    <div className={ styles.sectionHead }>
+                        <h2>محصولات جدید</h2>
+                    </div>
+
+                    <ProductGrid
+                        products={ newestProducts }
+                        onAddToCart={ onAddToCart }
+                        emptyMessage="محصولات جدیدی موجود نیست."
+                    />
+
+                </div>
+
+            </section>
+            {/* BEST SELLERS */ }
+            <section className={ styles.section }>
+
+                <div className="container">
+
+                    <div className={ styles.sectionHead }>
+                        <h2>پرفروش‌ترین‌ها</h2>
+                    </div>
+
+                    <ProductGrid
+                        products={ bestSellers }
+                        onAddToCart={ onAddToCart }
+                        emptyMessage="محصولات پرفروشی موجود نیست."
+                    />
+
+                </div>
+
+            </section>
+            {/* NEWSLETTER */ }
+            <section className={ styles.newsletter }>
+
+                <div className="container">
+
+                    <h2>
+                        عضویت در خبرنامه
+                    </h2>
+
+                    <p>
+                        از تخفیف‌ها و محصولات جدید باخبر شوید
+                    </p>
+
+                    <form className={ styles.newsletterForm }>
+                        <input
+                            type="email"
+                            placeholder="ایمیل شما"
+                            aria-label="ایمیل شما"
+                        />
+                        <button type="submit">عضویت</button>
+                    </form>
+
+                </div>
+
+            </section>
+
 
         </main>
     );

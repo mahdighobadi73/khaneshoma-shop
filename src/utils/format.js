@@ -16,7 +16,7 @@ export function formatPrice(price) {
 }
 
 export function toPersianNumber(value) {
-  return new Intl.NumberFormat("fa-IR").format(value);
+  return String( value ).replace( /\d/g, ( d ) => "۰۱۲۳۴۵۶۷۸۹"[ d ] );
 }
 
 export function safeParseJSON(value, fallback) {

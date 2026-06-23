@@ -7,10 +7,15 @@ export const PRODUCTS = [
     rating: 4.8,
     stock: 12,
     badge: "پرفروش",
-    image:
+
+    images: [
       "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=900&q=80"
+    ],
+
     description:
-      "ست کامل و باکیفیت ظروف آشپزخانه با طراحی مدرن، مناسب برای استفاده روزمره و جهیزیه.",
+      "ست کامل و باکیفیت ظروف آشپزخانه با طراحی مدرن، مناسب برای استفاده روزمره و جهیزیه."
   },
   {
     id: 2,
@@ -20,8 +25,9 @@ export const PRODUCTS = [
     rating: 4.9,
     stock: 18,
     badge: "محبوب",
-    image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "ست نرم و راحت برای خواب بهتر با متریال باکیفیت و طراحی مینیمال.",
   },
@@ -33,8 +39,9 @@ export const PRODUCTS = [
     rating: 5,
     stock: 4,
     badge: "ویژه",
-    image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "فرش با اصالت ایرانی، طرح سنتی و کیفیت ممتاز برای فضای لوکس و کلاسیک.",
   },
@@ -46,8 +53,10 @@ export const PRODUCTS = [
     rating: 4.7,
     stock: 10,
     badge: "جدید",
-    image:
+    images: [
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "چراغ کریستالی دکوراتیو برای جلوه بیشتر در نشیمن، پذیرایی و اتاق خواب.",
   },
@@ -59,8 +68,14 @@ export const PRODUCTS = [
     rating: 4.6,
     stock: 3,
     badge: "لوکس",
-    image:
+    images: [
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+    ],
     description:
       "مبل راحتی با طراحی مدرن، فوم سرد و پارچه مقاوم، مناسب خانه‌های شیک و امروزی.",
   },
@@ -72,8 +87,12 @@ export const PRODUCTS = [
     rating: 4.5,
     stock: 15,
     badge: "شیک",
-    image:
+    images: [
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "آینه دیواری با قاب طلایی برای بزرگ‌تر دیده شدن فضا و زیبایی بیشتر دکوراسیون.",
   },
@@ -85,8 +104,11 @@ export const PRODUCTS = [
     rating: 4.4,
     stock: 20,
     badge: "اقتصادی",
-    image:
+    images: [
       "https://images.unsplash.com/photo-1484101403633-562f891dc89a?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1484101403633-562f891dc89a?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1484101403633-562f891dc89a?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "ست گلدان تزیینی با طراحی خاص برای میز، کنسول و دکور مینیمال داخلی.",
   },
@@ -98,8 +120,11 @@ export const PRODUCTS = [
     rating: 4.8,
     stock: 8,
     badge: "ترند",
-    image:
+    images: [
       "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80"
+    ],
     description:
       "فرش مدرن با رنگ‌بندی جذاب و بافت مقاوم، مناسب دکوراسیون contemporary.",
   },

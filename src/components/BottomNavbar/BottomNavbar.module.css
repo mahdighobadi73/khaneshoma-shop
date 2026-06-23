@@ -1,53 +1,98 @@
 .bottomNav {
-
   position: fixed;
+
   bottom: 0;
   left: 0;
   right: 0;
 
-  height: 65px;
+  height: 68px;
 
-  background: white;
-
-  border-top: 1px solid var(--border);
+  background: #fff;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
+  border-top: 1px solid var(--border);
+
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, .06);
+
   z-index: 1000;
 }
 
 .bottomNav a {
+  flex: 1;
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   text-decoration: none;
 
-  font-size: 0.75rem;
+  color: #81858b;
 
-  color: #777;
+  font-size: .72rem;
 
   gap: 4px;
+
+  transition: .2s;
 }
 
 .bottomNav a span {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
+}
+
+.bottomNav a small {
+  font-size: .68rem;
 }
 
 .bottomNav a.active {
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* desktop hide */
+.icon {
+  font-size: 1.45rem;
+  stroke-width: 1.8;
+}
 
-@media (min-width:768px) {
+.cartLink {
+  position: relative;
+}
 
+.badge {
+  position: absolute;
+
+  top: 2px;
+  left: 50%;
+
+  transform: translateX(-12px);
+
+  min-width: 18px;
+  height: 18px;
+
+  border-radius: 999px;
+
+  background: var(--primary);
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: .65rem;
+  font-weight: 700;
+
+  padding: 0 4px;
+
+  border: 2px solid white;
+}
+
+@media (min-width: 768px) {
   .bottomNav {
     display: none;
   }
-
 }

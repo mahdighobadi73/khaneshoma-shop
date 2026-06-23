@@ -1,3 +1,13 @@
+:root {
+  --primary: #ff6b35;
+  --text: #1f2937;
+  --border: #dfe3e8;
+
+  --background: #f7f7f7;
+  --surface: #ffffff;
+  --muted: #6b7280;
+}
+
 .section {
   padding: 80px 0;
   background: #f7f7f7;

@@ -1,19 +1,66 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { formatPrice, toPersianNumber } from "../../utils/format";
 import styles from "./ProductDetail.module.css";
 
-export default function ProductDetail({ products, onAddToCart }) {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+export default function ProductDetail({ onAddToCart }) {
 
-  if (!product) {
+  const { id } = useParams();
+
+  const [product, setProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  /* =========================
+     FETCH SINGLE PRODUCT
+  ========================= */
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+
+        if (!res.ok) {
+          throw new Error("Product not found");
+        }
+
+        const data = await res.json();
+
+        setProduct(data);
+        setSelectedImage(data?.images?.[0] || "");
+
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProduct();
+  }, [id]);
+
+  /* =========================
+     STATES
+  ========================= */
+
+  if (loading) {
+    return (
+      <p className={styles.loading}>
+        در حال بارگذاری محصول...
+      </p>
+    );
+  }
+
+  if (error || !product) {
     return (
       <section className={styles.notFoundSection}>
         <div className={styles.container}>
           <div className={styles.notFoundBox}>
             <span className={styles.notFoundIcon}>!</span>
             <h2>محصول یافت نشد</h2>
-            <p>محصولی که به دنبال آن هستید وجود ندارد یا حذف شده است.</p>
+            <p>{error || "این محصول وجود ندارد یا حذف شده است"}</p>
 
             <Link to="/products" className={styles.backLink}>
               بازگشت به محصولات
@@ -24,21 +71,43 @@ export default function ProductDetail({ products, onAddToCart }) {
     );
   }
 
+  const isOutOfStock = product.stock <= 0;
+
   return (
     <section className={styles.productDetailSection}>
       <div className={styles.container}>
         <div className={styles.productDetail}>
 
+          {/* IMAGE */}
           <div className={styles.imagePanel}>
-            <div className={styles.imageWrapper}>
-              <img
-                className={styles.productImage}
-                src={product.image}
-                alt={product.name}
-              />
+            <div className={styles.gallery}>
+
+              <div className={styles.thumbnails}>
+                {product.images?.map((img, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.thumb} ${
+                      selectedImage === img ? styles.activeThumb : ""
+                    }`}
+                    onClick={() => setSelectedImage(img)}
+                  >
+                    <img src={img} alt={`${product.name}-${index}`} />
+                  </button>
+                ))}
+              </div>
+
+              <div className={styles.imageWrapper}>
+                <img
+                  src={selectedImage}
+                  alt={product.name}
+                  className={styles.productImage}
+                />
+              </div>
+
             </div>
           </div>
 
+          {/* INFO */}
           <div className={styles.infoPanel}>
 
             {product.badge && (
@@ -55,8 +124,8 @@ export default function ProductDetail({ products, onAddToCart }) {
               {product.description}
             </p>
 
+            {/* META */}
             <div className={styles.metaGrid}>
-
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>دسته‌بندی</span>
                 <strong className={styles.metaValue}>
@@ -70,17 +139,16 @@ export default function ProductDetail({ products, onAddToCart }) {
                   ⭐ {toPersianNumber(product.rating)}
                 </strong>
               </div>
-
-              <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>موجودی</span>
-                <strong className={styles.metaValue}>
-                  {toPersianNumber(product.stock)}
-                </strong>
-              </div>
-
             </div>
 
+            {/* PURCHASE */}
             <div className={styles.purchaseBox}>
+
+              <span className={styles.stockStatus}>
+                {isOutOfStock
+                  ? "ناموجود"
+                  : `✓ ${toPersianNumber(product.stock)} عدد موجود`}
+              </span>
 
               <div>
                 <span className={styles.priceLabel}>قیمت محصول</span>
@@ -91,9 +159,10 @@ export default function ProductDetail({ products, onAddToCart }) {
 
               <button
                 className={styles.addToCartButton}
-                onClick={() => onAddToCart(product.id)}
+                onClick={() => onAddToCart(product._id || product.id)}
+                disabled={isOutOfStock}
               >
-                افزودن به سبد خرید
+                {isOutOfStock ? "ناموجود" : "افزودن به سبد خرید"}
               </button>
 
             </div>

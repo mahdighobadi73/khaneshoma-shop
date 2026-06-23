@@ -3,131 +3,139 @@ import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { toPersianNumber } from "../../utils/format";
 
-export default function Header({ cartCount, products = [] }) {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
+export default function Header ( { cartCount, products = [] } ) {
+    const [ menuOpen, setMenuOpen ] = useState( false );
+    const [ searchOpen, setSearchOpen ] = useState( false );
+    const [ query, setQuery ] = useState( "" );
+    const [ results, setResults ] = useState( [] );
 
     const location = useLocation();
     const navigate = useNavigate();
 
     const closeSearch = () => {
-        setSearchOpen(false);
-        setQuery("");
-        setResults([]);
+        setSearchOpen( false );
+        setQuery( "" );
+        setResults( [] );
     };
 
     /* close on route change */
 
-    useEffect(() => {
-        setMenuOpen(false);
+    useEffect( () => {
+        setMenuOpen( false );
         closeSearch();
-    }, [location]);
+    }, [ location ] );
 
     /* ESC close */
 
-    useEffect(() => {
+    useEffect( () => {
         const handler = e => {
-            if (e.key === "Escape") closeSearch();
+            if ( e.key === "Escape" ) closeSearch();
         };
 
-        window.addEventListener("keydown", handler);
-        return () => window.removeEventListener("keydown", handler);
-    }, []);
+        window.addEventListener( "keydown", handler );
+        return () => window.removeEventListener( "keydown", handler );
+    }, [] );
 
     /* live search with debounce */
 
-    useEffect(() => {
-        if (!query.trim()) {
-            setResults([]);
+    useEffect( () => {
+        if ( !query.trim() ) {
+            setResults( [] );
             return;
         }
 
-        const timer = setTimeout(() => {
-            const filtered = products.filter(p =>
-                p.title.toLowerCase().includes(query.toLowerCase())
+        const timer = setTimeout( () => {
+            const filtered = products.filter( p =>
+                p.name.toLowerCase().includes( query.toLowerCase() )
             );
 
-            setResults(filtered.slice(0, 6));
-        }, 300);
+            setResults( filtered.slice( 0, 6 ) );
+        }, 300 );
 
-        return () => clearTimeout(timer);
-    }, [query, products]);
+        return () => clearTimeout( timer );
+    }, [ query, products ] );
 
     return (
         <>
-            <header className={styles.header}>
-                <div className={`container ${styles.inner}`}>
-                    <Link to="/" className={styles.logo}>
+            <header className={ styles.header }>
+                <div className={ `container ${ styles.inner }` }>
+                    <Link to="/" className={ styles.logo }>
                         🏠 خانه شما
                     </Link>
 
-                    {/* desktop search */}
+                    {/* desktop search */ }
 
-                    <div className={styles.searchWrapper}>
-                        <SearchIcon className={styles.searchIcon} />
+                    <div className={ styles.searchWrapper }>
+                        <SearchIcon className={ styles.searchIcon } />
 
                         <input
                             type="text"
-                            placeholder="جستجوی ملک..."
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                            onFocus={() => setSearchOpen(true)}
-                            onBlur={() =>
-                                setTimeout(() => setSearchOpen(false), 200)
+                            placeholder="جستجوی محصولات..."
+                            value={ query }
+                            onChange={ e => setQuery( e.target.value ) }
+                            onFocus={ () => setSearchOpen( true ) }
+                            onBlur={ () =>
+                                setTimeout( () => setSearchOpen( false ), 200 )
                             }
                         />
 
-                        {query && (
+                        { query && (
                             <button
-                                className={styles.clearBtn}
-                                onClick={() => setQuery("")}
+                                className={ styles.clearBtn }
+                                onClick={ () => setQuery( "" ) }
                             >
                                 ×
                             </button>
-                        )}
+                        ) }
 
-                        {searchOpen && results.length > 0 && (
-                            <div className={styles.results}>
-                                {results.map(item => (
-                                    <Link
-                                        key={item.id}
-                                        to={`/products/${item.id}`}
-                                        className={styles.resultItem}
-                                        onClick={closeSearch}
-                                    >
-                                        {item.title}
-                                    </Link>
-                                ))}
+                        { searchOpen && query && (
+                            <div className={ styles.results }>
+                                { results.length > 0 ? (
+                                    results.map( item => (
+                                        <Link
+                                            key={ item.id }
+                                            to={ `/products/${ item.id }` }
+                                            className={ styles.resultItem }
+                                            onClick={ closeSearch }
+                                        >
+                                            { item.name }
+                                        </Link>
+                                    ) )
+                                ) : (
+                                    <div className={ styles.emptyResult }>
+                                        محصولی پیدا نشد
+                                    </div>
+                                ) }
                             </div>
-                        )}
+                        ) }
                     </div>
 
-                    {/* cart */}
+                    {/* cart */ }
 
-                    <Link to="/cart" className={styles.cart}>
+                    <Link to="/cart" className={ styles.cart }>
                         🛒
-                        <span className={styles.badge}>
-                            {toPersianNumber(cartCount)}
-                        </span>
+                        { cartCount > 0 && (
+                            <span className={ styles.badge }>
+                                { toPersianNumber( cartCount ) }
+                            </span>
+                        ) }
                     </Link>
                 </div>
             </header>
 
-            {searchOpen && (
-                <div className={styles.searchBackdrop} onClick={closeSearch} />
-            )}
+            { searchOpen && (
+                <div className={ styles.searchBackdrop } onClick={ closeSearch } />
+            ) }
         </>
     );
 }
 
 /* modern search icon */
 
-function SearchIcon({ className }) {
+function SearchIcon ( { className } ) {
     return (
         <svg
-            className={className}
+            className={ className }
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

@@ -2,47 +2,95 @@ import { Link } from "react-router-dom";
 import { formatPrice } from "../../utils/format";
 import styles from "./ProductCard.module.css";
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard ( { product, onAddToCart } ) {
+  if ( !product ) return null;
+
+  const {
+    id,
+    name = "بدون نام",
+    description = "",
+    price = 0,
+    images = [],
+    stock = 0,
+    badge,
+    rating,
+  } = product;
+
+  const imageSrc = images?.[ 0 ] || "/placeholder.jpg";
+  const isOutOfStock = stock <= 0;
+
   return (
-    <article className={styles.card}>
+    <article className={ styles.card }>
 
       <Link
-        to={`/products/${product.id}`}
-        className={styles.imageLink}
+        to={ `/products/${ id }` }
+        className={ styles.imageLink }
+        aria-label={ `مشاهده ${ name }` }
       >
-        <div className={styles.imageWrapper}>
+        <div className={ styles.imageWrapper }>
+
+          {/* BADGE */ }
+          { badge && (
+            <span className={ styles.badge }>
+              { badge }
+            </span>
+          ) }
+
           <img
-            src={product.image}
-            alt={product.name}
-            className={styles.productImage}
+            src={ imageSrc }
+            alt={ name }
+            className={ styles.productImage }
+            loading="lazy"
           />
+
         </div>
       </Link>
 
-      <div className={styles.cardBody}>
+      <div className={ styles.cardBody }>
 
         <Link
-          to={`/products/${product.id}`}
-          className={styles.productName}
+          to={ `/products/${ id }` }
+          className={ styles.productName }
         >
-          {product.name}
+          { name }
         </Link>
 
-        <p className={styles.productDescription}>
-          {product.description}
+        <p className={ styles.productDescription }>
+          { description }
         </p>
 
-        <div className={styles.cardFooter}>
+        {/* META */ }
+        <div className={ styles.meta }>
+          { rating !== undefined && (
+            <span className={ styles.rating }>
+              ⭐ { rating }
+            </span>
+          ) }
 
-          <strong className={styles.productPrice}>
-            {formatPrice(product.price)}
+          <span
+            className={ `${ styles.stock } ${ isOutOfStock ? styles.outOfStock : ""
+              }` }
+          >
+            { isOutOfStock ? "ناموجود" : `موجودی: ${ stock }` }
+          </span>
+        </div>
+
+        {/* FOOTER */ }
+        <div className={ styles.cardFooter }>
+
+          <strong className={ styles.productPrice }>
+            { formatPrice( price ) }
           </strong>
 
           <button
-            className={styles.addButton}
-            onClick={() => onAddToCart(product.id)}
+            className={ styles.addButton }
+            onClick={ () => {
+              if ( !isOutOfStock ) onAddToCart( id );
+            } }
+            disabled={ isOutOfStock }
+            aria-disabled={ isOutOfStock }
           >
-            افزودن
+            { isOutOfStock ? "ناموجود" : "افزودن" }
           </button>
 
         </div>

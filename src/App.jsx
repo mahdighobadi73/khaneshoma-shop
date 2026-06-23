@@ -126,7 +126,7 @@ export default function App() {
 
             {/* MOBILE NAVBAR */}
 
-            <BottomNavbar />
+            <BottomNavbar cartCount={cartCount} />
 
             {/* TOAST */}
 
