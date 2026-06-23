@@ -70,7 +70,7 @@ export default function Header ( { cartCount, products = [] } ) {
 
                         <input
                             type="text"
-                            placeholder="جستجوی محصولات..."
+                            placeholder="جستجوی محصولات"
                             value={ query }
                             onChange={ e => setQuery( e.target.value ) }
                             onFocus={ () => setSearchOpen( true ) }

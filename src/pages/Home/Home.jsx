@@ -1,6 +1,7 @@
 import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 
@@ -17,6 +18,11 @@ export default function Home ( { products = [], onAddToCart } ) {
 
     const bestSellers =
         products.filter( p => p.badge === "پرفروش" );
+    const [ selectedCategory, setSelectedCategory ] = useState( null );
+    const filteredProducts = selectedCategory
+        ? products.filter(
+            p => p.category === selectedCategory
+        ) : [];
 
     return (
         <main className={ styles.homeWrapper }>
@@ -79,16 +85,23 @@ export default function Home ( { products = [], onAddToCart } ) {
                         { categories.map( category => (
 
                             <div
+
                                 key={ category }
                                 className={ styles.categoryCard }
+                                onClick={ () => setSelectedCategory( category ) }
                             >
                                 { category }
                             </div>
 
                         ) ) }
 
-                    </div>
 
+                    </div>
+                    <ProductGrid
+                        products={ filteredProducts }
+                        onAddToCart={ onAddToCart }
+                        emptyMessage="هیچ دسته بندی انتخاب نشده است."
+                    />
                 </div>
 
             </section>
@@ -112,6 +125,7 @@ export default function Home ( { products = [], onAddToCart } ) {
                     />
                 </div>
             </section>
+
             {/* AMAZING OFFERS */ }
             <section className={ styles.section }>
 
@@ -130,6 +144,7 @@ export default function Home ( { products = [], onAddToCart } ) {
                 </div>
 
             </section>
+
             {/* NEWEST PRODUCTS */ }
             <section className={ styles.section }>
 
@@ -148,6 +163,7 @@ export default function Home ( { products = [], onAddToCart } ) {
                 </div>
 
             </section>
+
             {/* BEST SELLERS */ }
             <section className={ styles.section }>
 
@@ -166,6 +182,7 @@ export default function Home ( { products = [], onAddToCart } ) {
                 </div>
 
             </section>
+
             {/* NEWSLETTER */ }
             <section className={ styles.newsletter }>
 
@@ -191,7 +208,6 @@ export default function Home ( { products = [], onAddToCart } ) {
                 </div>
 
             </section>
-
 
         </main>
     );
