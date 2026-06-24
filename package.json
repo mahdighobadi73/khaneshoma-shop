@@ -29,7 +29,7 @@
     "globals": "^17.6.0",
     "vite": "^8.0.12"
   },
-  "description": "<<<<<<< HEAD # khaneshoma-shop ======= # React + Vite",
+  "description": "فروشگاه آنلاین React + Vite",
   "main": "eslint.config.js",
   "keywords": [],
   "author": "",

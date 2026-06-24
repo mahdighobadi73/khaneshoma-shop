@@ -18,11 +18,10 @@ export default function Home ( { products = [], onAddToCart } ) {
 
     const bestSellers =
         products.filter( p => p.badge === "پرفروش" );
-    const [ selectedCategory, setSelectedCategory ] = useState( null );
-    const filteredProducts = selectedCategory
-        ? products.filter(
-            p => p.category === selectedCategory
-        ) : [];
+    const [ selectedCategory, setSelectedCategory ] = useState( "همه" );
+    const filteredProducts = selectedCategory === "همه"
+        ? products
+        : products.filter( ( p ) => p.category === selectedCategory );
 
     return (
         <main className={ styles.homeWrapper }>
@@ -82,17 +81,21 @@ export default function Home ( { products = [], onAddToCart } ) {
 
                     <div className={ styles.categoriesGrid }>
 
-                        { categories.map( category => (
-
+                        <div
+                            key="all"
+                            className={ styles.categoryCard }
+                            onClick={ () => setSelectedCategory( "همه" ) }
+                        >
+                            همه
+                        </div>
+                        { categories.map( ( category ) => (
                             <div
-
                                 key={ category }
                                 className={ styles.categoryCard }
                                 onClick={ () => setSelectedCategory( category ) }
                             >
                                 { category }
                             </div>
-
                         ) ) }
 
 

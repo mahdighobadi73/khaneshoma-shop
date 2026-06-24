@@ -10,7 +10,7 @@ export default function Products ( { onAddToCart } ) {
   const [ error, setError ] = useState( null );
 
   const categories = useMemo(
-    () => [ "همه", ...getCategories( products ) ],
+    () => getCategories( products ),
     [ products ]
   );
 

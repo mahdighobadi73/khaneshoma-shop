@@ -1,20 +1,20 @@
-<<<<<<< HEAD
 # khaneshoma-shop
-=======
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+این پروژه یک فروشگاه آنلاین ساده با React، Vite و Express است. در این پروژه:
 
-Currently, two official plugins are available:
+- از `react-router-dom` برای ناوبری استفاده می‌شود.
+- سبد خرید در `localStorage` ذخیره می‌شود.
+- سرور Express با مسیرهای محصولات و پرداخت mock پیاده‌سازی شده است.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## اجرای پروژه
 
-## React Compiler
+1. در ریشه پروژه `npm install` را اجرا کنید.
+2. در پوشه `server` نیز `npm install` را اجرا کنید.
+3. در پوشه `server` `npm run dev` و در پوشه ریشه `npm run dev` را اجرا کنید.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## مسیرهای API
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 89fe908 (Initial commit: Adding khaneshoma-shop project files)
+- `GET /api/products`
+- `GET /api/products/:id`
+- `POST /api/payment/request`
+- `POST /api/payment/verify`

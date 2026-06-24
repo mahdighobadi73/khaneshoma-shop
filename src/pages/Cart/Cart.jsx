@@ -1,12 +1,11 @@
 import CartItem from "/src/components/CartItem/CartItem";
 import { formatPrice, toPersianNumber } from "../../utils/format";
-import styles from "./Cart.module.css"
+import styles from "./Cart.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart ( {
   cartItems,
   cartTotal,
-  onNavigate,
   onIncrement,
   onDecrement,
   onRemove,
@@ -24,7 +23,7 @@ export default function Cart ( {
             <p>هنوز هیچ محصولی به سبد اضافه نشده. از صفحه محصولات شروع کن.</p>
             <button
               className={ styles.primaryBtn }
-              onClick={ () => navigate( "/Products" ) }
+              onClick={ () => navigate( "/products" ) }
             >
               رفتن به محصولات
             </button>
@@ -82,12 +81,12 @@ export default function Cart ( {
 
           <button
             className={ `${ styles.secondaryBtn } ${ styles.fullWidth }` }
-            onClick={ () => navigate("/Products") }
+            onClick={ () => navigate( "/products" ) }
           >
             ادامه خرید
           </button>
         </aside>
       </div>
-    </section>
+    </section >
   );
 }

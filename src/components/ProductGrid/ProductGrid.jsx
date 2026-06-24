@@ -17,7 +17,7 @@ export default function ProductGrid({ products, onAddToCart, emptyMessage }) {
     <div className={styles.productsGrid}>
       {products.map((product) => (
         <ProductCard
-          key={product.id}
+          key={product._id}
           product={product}
           onAddToCart={onAddToCart}
         />

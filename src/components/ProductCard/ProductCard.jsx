@@ -6,7 +6,7 @@ export default function ProductCard ( { product, onAddToCart } ) {
   if ( !product ) return null;
 
   const {
-    id,
+    _id,
     name = "بدون نام",
     description = "",
     price = 0,
@@ -21,15 +21,12 @@ export default function ProductCard ( { product, onAddToCart } ) {
 
   return (
     <article className={ styles.card }>
-
       <Link
-        to={ `/products/${ id }` }
+        to={ `/products/${ _id }` }
         className={ styles.imageLink }
         aria-label={ `مشاهده ${ name }` }
       >
         <div className={ styles.imageWrapper }>
-
-          {/* BADGE */ }
           { badge && (
             <span className={ styles.badge }>
               { badge }
@@ -42,14 +39,12 @@ export default function ProductCard ( { product, onAddToCart } ) {
             className={ styles.productImage }
             loading="lazy"
           />
-
         </div>
       </Link>
 
       <div className={ styles.cardBody }>
-
         <Link
-          to={ `/products/${ id }` }
+          to={ `/products/${ _id }` }
           className={ styles.productName }
         >
           { name }
@@ -59,7 +54,6 @@ export default function ProductCard ( { product, onAddToCart } ) {
           { description }
         </p>
 
-        {/* META */ }
         <div className={ styles.meta }>
           { rating !== undefined && (
             <span className={ styles.rating }>
@@ -71,13 +65,13 @@ export default function ProductCard ( { product, onAddToCart } ) {
             className={ `${ styles.stock } ${ isOutOfStock ? styles.outOfStock : ""
               }` }
           >
-            { isOutOfStock ? "ناموجود" : `موجودی: ${ stock }` }
+            { isOutOfStock
+              ? "ناموجود"
+              : `موجودی: ${ stock }` }
           </span>
         </div>
 
-        {/* FOOTER */ }
         <div className={ styles.cardFooter }>
-
           <strong className={ styles.productPrice }>
             { formatPrice( price ) }
           </strong>
@@ -85,18 +79,17 @@ export default function ProductCard ( { product, onAddToCart } ) {
           <button
             className={ styles.addButton }
             onClick={ () => {
-              if ( !isOutOfStock ) onAddToCart( id );
+              if ( !isOutOfStock ) {
+                onAddToCart( _id );
+              }
             } }
             disabled={ isOutOfStock }
             aria-disabled={ isOutOfStock }
           >
             { isOutOfStock ? "ناموجود" : "افزودن" }
           </button>
-
         </div>
-
       </div>
-
     </article>
   );
 }

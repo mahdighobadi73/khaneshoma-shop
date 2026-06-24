@@ -1,9 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import Header from "./components/Header/Header";
 import BottomNavbar from "./components/BottomNavbar/BottomNavbar";
 import Toast from "./components/Toast/Toast";
 
-import { PRODUCTS } from "./data/products";
 import useCart from "./hooks/useCart";
 
 import Home from "./pages/Home/Home";
@@ -15,10 +16,48 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import PaymentVerify from "./pages/PaymentVerify/PaymentVerify";
 
-import { useEffect, useState } from "react";
+export default function App () {
+    const navigate = useNavigate();
 
-export default function App() {
-    const [toastMessage, setToastMessage] = useState("");
+    const [ toastMessage, setToastMessage ] = useState( "" );
+    const [ products, setProducts ] = useState( [] );
+    const [ loading, setLoading ] = useState( true );
+    const [ error, setError ] = useState( null );
+
+    /* =========================
+       FETCH PRODUCTS
+    ========================= */
+
+    useEffect( () => {
+        async function loadProducts () {
+            try {
+                setLoading( true );
+
+                const response = await fetch(
+                    "http://localhost:5000/api/products"
+                );
+
+                if ( !response.ok ) {
+                    throw new Error( "خطا در دریافت محصولات" );
+                }
+
+                const data = await response.json();
+
+                setProducts( data );
+            } catch ( err ) {
+                console.error( err );
+                setError( err.message );
+            } finally {
+                setLoading( false );
+            }
+        }
+
+        loadProducts();
+    }, [] );
+
+    /* =========================
+       CART
+    ========================= */
 
     const {
         cartItems,
@@ -28,58 +67,121 @@ export default function App() {
         increment,
         decrement,
         removeFromCart,
-        clearCart
-    } = useCart(PRODUCTS);
+        clearCart,
+    } = useCart( products );
 
-    function showToast(message) {
-        setToastMessage(message);
+    /* =========================
+       TOAST
+    ========================= */
+
+    function showToast ( message ) {
+        setToastMessage( message );
     }
 
-    useEffect(() => {
-        if (!toastMessage) return;
+    useEffect( () => {
+        if ( !toastMessage ) return;
 
-        const timer = setTimeout(() => setToastMessage(""), 3000);
+        const timer = setTimeout( () => {
+            setToastMessage( "" );
+        }, 3000 );
 
-        return () => clearTimeout(timer);
-    }, [toastMessage]);
+        return () => clearTimeout( timer );
+    }, [ toastMessage ] );
 
-    function handleAddToCart(productId) {
-        const product = PRODUCTS.find(p => p.id === productId);
-        if (!product) return;
+    /* =========================
+       ADD TO CART
+    ========================= */
 
-        const cartItem = cartItems.find(item => item.id === productId) ?? null;
-        console.log(cartItem);
-        if (product.stock <= 0 || cartItem?.quantity >= product.stock) {
-            showToast("موجودی کافی نیست.");
+    function handleAddToCart ( productId ) {
+        const product = products.find(
+            ( p ) => p._id === productId
+        );
+
+        if ( !product ) return;
+
+        const cartItem =
+            cartItems.find(
+                ( item ) => item._id === productId
+            ) ?? null;
+
+        if (
+            product.stock <= 0 ||
+            cartItem?.quantity >= product.stock
+        ) {
+            showToast( "موجودی کافی نیست." );
             return;
         }
 
-        addToCart(productId);
-        showToast(`"${product.name}" به سبد اضافه شد.`);
+        addToCart( productId );
+
+        showToast(
+            `"${ product.name }" به سبد اضافه شد.`
+        );
     }
 
-    function handleCheckout() {
-        navigate("/Checkout", {
-  state: { cartItems, cartTotal },
-});
-        showToast("✓ سفارش ثبت شد.");
+    /* =========================
+       CHECKOUT
+    ========================= */
+
+    function handleCheckout () {
+        navigate( "/checkout", {
+            state: {
+                cartItems,
+                cartTotal,
+            },
+        } );
+
+        showToast( "✓ سفارش ثبت شد." );
     }
+
+    /* =========================
+       STATES
+    ========================= */
+
+    if ( loading ) {
+        return (
+            <div
+                style={ {
+                    textAlign: "center",
+                    padding: "40px",
+                } }
+            >
+                در حال بارگذاری محصولات...
+            </div>
+        );
+    }
+
+    if ( error ) {
+        return (
+            <div
+                style={ {
+                    textAlign: "center",
+                    padding: "40px",
+                } }
+            >
+                خطا: { error }
+            </div>
+        );
+    }
+
+    /* =========================
+       UI
+    ========================= */
 
     return (
         <>
-            {/* HEADER */}
-
-            <Header cartCount={cartCount} products={PRODUCTS} />
-
-            {/* ROUTES */}
+            <Header
+                cartCount={ cartCount }
+                products={ products }
+            />
 
             <Routes>
                 <Route
                     path="/"
                     element={
                         <Home
-                            products={PRODUCTS}
-                            onAddToCart={handleAddToCart}
+                            products={ products }
+                            onAddToCart={ handleAddToCart }
                         />
                     }
                 />
@@ -88,8 +190,7 @@ export default function App() {
                     path="/products"
                     element={
                         <Products
-                            products={PRODUCTS}
-                            onAddToCart={handleAddToCart}
+                            onAddToCart={ handleAddToCart }
                         />
                     }
                 />
@@ -98,8 +199,7 @@ export default function App() {
                     path="/products/:id"
                     element={
                         <ProductDetail
-                            products={PRODUCTS}
-                            onAddToCart={handleAddToCart}
+                            onAddToCart={ handleAddToCart }
                         />
                     }
                 />
@@ -108,29 +208,42 @@ export default function App() {
                     path="/cart"
                     element={
                         <Cart
-                            cartItems={cartItems}
-                            cartTotal={cartTotal}
-                            onIncrement={increment}
-                            onDecrement={decrement}
-                            onRemove={removeFromCart}
-                            onCheckout={handleCheckout}
+                            cartItems={ cartItems }
+                            cartTotal={ cartTotal }
+                            onIncrement={ increment }
+                            onDecrement={ decrement }
+                            onRemove={ removeFromCart }
+                            onCheckout={ handleCheckout }
                         />
                     }
                 />
 
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/verify-payment" element={<PaymentVerify />} />
+                <Route
+                    path="/about"
+                    element={ <About /> }
+                />
+
+                <Route
+                    path="/contact"
+                    element={ <Contact /> }
+                />
+
+                <Route
+                    path="/checkout"
+                    element={ <Checkout /> }
+                />
+
+                <Route
+                    path="/verify-payment"
+                    element={ <PaymentVerify /> }
+                />
             </Routes>
 
-            {/* MOBILE NAVBAR */}
+            <BottomNavbar
+                cartCount={ cartCount }
+            />
 
-            <BottomNavbar cartCount={cartCount} />
-
-            {/* TOAST */}
-
-            <Toast message={toastMessage} />
+            <Toast message={ toastMessage } />
         </>
     );
 }

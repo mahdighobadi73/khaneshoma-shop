@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { toPersianNumber } from "../../utils/format";
@@ -10,7 +10,6 @@ export default function Header ( { cartCount, products = [] } ) {
     const [ results, setResults ] = useState( [] );
 
     const location = useLocation();
-    const navigate = useNavigate();
 
     const closeSearch = () => {
         setSearchOpen( false );
@@ -18,25 +17,36 @@ export default function Header ( { cartCount, products = [] } ) {
         setResults( [] );
     };
 
-    /* close on route change */
+    /* =========================
+       CLOSE ON ROUTE CHANGE
+    ========================= */
 
     useEffect( () => {
         setMenuOpen( false );
         closeSearch();
     }, [ location ] );
 
-    /* ESC close */
+    /* =========================
+       ESC TO CLOSE SEARCH
+    ========================= */
 
     useEffect( () => {
-        const handler = e => {
-            if ( e.key === "Escape" ) closeSearch();
+        const handler = ( e ) => {
+            if ( e.key === "Escape" ) {
+                closeSearch();
+            }
         };
 
         window.addEventListener( "keydown", handler );
-        return () => window.removeEventListener( "keydown", handler );
+
+        return () => {
+            window.removeEventListener( "keydown", handler );
+        };
     }, [] );
 
-    /* live search with debounce */
+    /* =========================
+       LIVE SEARCH
+    ========================= */
 
     useEffect( () => {
         if ( !query.trim() ) {
@@ -45,8 +55,10 @@ export default function Header ( { cartCount, products = [] } ) {
         }
 
         const timer = setTimeout( () => {
-            const filtered = products.filter( p =>
-                p.name.toLowerCase().includes( query.toLowerCase() )
+            const filtered = products.filter( ( product ) =>
+                product.name
+                    ?.toLowerCase()
+                    .includes( query.toLowerCase() )
             );
 
             setResults( filtered.slice( 0, 6 ) );
@@ -63,7 +75,7 @@ export default function Header ( { cartCount, products = [] } ) {
                         🏠 خانه شما
                     </Link>
 
-                    {/* desktop search */ }
+                    {/* SEARCH */ }
 
                     <div className={ styles.searchWrapper }>
                         <SearchIcon className={ styles.searchIcon } />
@@ -72,10 +84,17 @@ export default function Header ( { cartCount, products = [] } ) {
                             type="text"
                             placeholder="جستجوی محصولات"
                             value={ query }
-                            onChange={ e => setQuery( e.target.value ) }
-                            onFocus={ () => setSearchOpen( true ) }
+                            onChange={ ( e ) =>
+                                setQuery( e.target.value )
+                            }
+                            onFocus={ () =>
+                                setSearchOpen( true )
+                            }
                             onBlur={ () =>
-                                setTimeout( () => setSearchOpen( false ), 200 )
+                                setTimeout(
+                                    () => setSearchOpen( false ),
+                                    200
+                                )
                             }
                         />
 
@@ -83,6 +102,7 @@ export default function Header ( { cartCount, products = [] } ) {
                             <button
                                 className={ styles.clearBtn }
                                 onClick={ () => setQuery( "" ) }
+                                type="button"
                             >
                                 ×
                             </button>
@@ -91,18 +111,24 @@ export default function Header ( { cartCount, products = [] } ) {
                         { searchOpen && query && (
                             <div className={ styles.results }>
                                 { results.length > 0 ? (
-                                    results.map( item => (
+                                    results.map( ( item ) => (
                                         <Link
-                                            key={ item.id }
-                                            to={ `/products/${ item.id }` }
-                                            className={ styles.resultItem }
+                                            key={ item._id }
+                                            to={ `/products/${ item._id }` }
+                                            className={
+                                                styles.resultItem
+                                            }
                                             onClick={ closeSearch }
                                         >
                                             { item.name }
                                         </Link>
                                     ) )
                                 ) : (
-                                    <div className={ styles.emptyResult }>
+                                    <div
+                                        className={
+                                            styles.emptyResult
+                                        }
+                                    >
                                         محصولی پیدا نشد
                                     </div>
                                 ) }
@@ -110,10 +136,14 @@ export default function Header ( { cartCount, products = [] } ) {
                         ) }
                     </div>
 
-                    {/* cart */ }
+                    {/* CART */ }
 
-                    <Link to="/cart" className={ styles.cart }>
+                    <Link
+                        to="/cart"
+                        className={ styles.cart }
+                    >
                         🛒
+
                         { cartCount > 0 && (
                             <span className={ styles.badge }>
                                 { toPersianNumber( cartCount ) }
@@ -124,13 +154,18 @@ export default function Header ( { cartCount, products = [] } ) {
             </header>
 
             { searchOpen && (
-                <div className={ styles.searchBackdrop } onClick={ closeSearch } />
+                <div
+                    className={ styles.searchBackdrop }
+                    onClick={ closeSearch }
+                />
             ) }
         </>
     );
 }
 
-/* modern search icon */
+/* =========================
+   SEARCH ICON
+========================= */
 
 function SearchIcon ( { className } ) {
     return (
@@ -142,7 +177,12 @@ function SearchIcon ( { className } ) {
             strokeWidth="2"
         >
             <circle cx="11" cy="11" r="7" />
-            <line x1="20" y1="20" x2="16.5" y2="16.5" />
+            <line
+                x1="20"
+                y1="20"
+                x2="16.5"
+                y2="16.5"
+            />
         </svg>
     );
 }
